@@ -51,7 +51,7 @@ export default function RegisterForm() {
   }
 
   return (
-    <div className="form-container">
+    <div className="register-form-container">
       <form onSubmit={submit}>
         <label htmlFor="username">Username: </label>
         <input 
