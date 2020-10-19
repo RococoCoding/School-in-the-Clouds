@@ -1,13 +1,23 @@
 import React, {useState} from "react";
 import TaskList from "./TaskList";
+import * as yup from "yup";
 
 const initialFormState = {
-  title: "",
+  due: "",
   task: "",
 }
 
+const formSchema = yup.object().shape({
+  due: yup
+    .string(),
+  task: yup
+    .string()
+    .min(1, "You must enter a task description.")
+})
+
 export default function CreateTask() {
   const [formState, setFormState] = useState(initialFormState);
+  const [formErrors, setFormErrors] = useState({});
   const [taskList, setTaskList] = useState([]);
 
   function updateForm(e) {
@@ -16,35 +26,50 @@ export default function CreateTask() {
 
   function submit(e) {
     e.preventDefault();
-    let newList = [...taskList];
-    newList.push(formState);
-    setTaskList(newList);
-    setFormState(initialFormState);
+    formSchema.validate(formState, {abortEarly:false})
+      .then(valid => {
+        let newList = [...taskList];
+        newList.push(formState);
+        setTaskList(newList);
+        setFormState(initialFormState);
+      })
+      .catch(err => {
+        let errors = err.inner;
+        let errorsObj = {};
+        for (let i in errors) {
+          let key = errors[i].params.path;
+          errorsObj[key] = errors[i].errors[0]; //put all errors in an obj to mimic errorsState
+        }
+        setFormErrors(errorsObj); 
+      })
+   
   }
 
   return (
     <div className="create-task-container">
       <form onSubmit={submit}>
-        <label>Title: </label>
+        <label htmlFor="due">Due Date: </label>
         <input 
-          name="title"
+          name="due"
           type="text"
-          value={formState.title}
+          value={formState.due}
           onChange={updateForm}
         />
+        <label htmlFor="task">Task: </label>
         <textarea 
           name="task"
           placeholder="Enter your task here."
           value={formState.task}
           onChange={updateForm}
         />
+        {formErrors.task && <p className="error">{formErrors.task}</p>}
         <button type="submit">Add Task</button>
       </form>
       {taskList.map((task, idx) => {
         return (
           <TaskList 
             key={idx}
-            title={task.title}
+            due={task.due}
             task={task.task}          
           />
         )
