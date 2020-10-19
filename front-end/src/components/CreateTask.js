@@ -44,6 +44,13 @@ export default function CreateTask() {
       })
    
   }
+  
+  function deleteTask(id) {
+    let newList = [...taskList];
+    // console.log(key)
+    newList.splice(id, 1);
+    setTaskList(newList);
+  }
 
   return (
     <div className="create-task-container">
@@ -69,8 +76,10 @@ export default function CreateTask() {
         return (
           <TaskList 
             key={idx}
+            id={idx}
             due={task.due}
-            task={task.task}          
+            task={task.task}
+            deleteTask={deleteTask}      
           />
         )
       })}
