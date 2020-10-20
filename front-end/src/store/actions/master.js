@@ -1,9 +1,35 @@
-// ADD_TASKS, ADD_TASKS_RES, ADD_TASKS_ERR
-// SET_USER_ID, LOADING_RES
-// getTasks, addTask, deleteTask, setUserID, deleteUser, setLoading, loadingRes, setErros
+//First two blocks consist of exported actions from the other action files 
 
-// GET_VOLUNTEERS, GET_VOLUNTEER_RES, GET_VOLUNTEERS_ERR
-// getVolunteers, getAllUsers
+export {
+    GET_TASKS,
+    GET_TASKS_RES,
+    GET_TASKS_ERR,
+    ADD_TASKS,
+    ADD_RES,
+    EDIT_TASK,
+    DELETE_TASK,
+    SET_USER_ID,
+    SET_EDITING,
+    LOADING_RES,
+    SET_ERRORS,
+    getTasks,
+    addTasks,
+    editTask,
+    deleteTask,
+    setUserID,
+    setEditing,
+    loadingRes,
+    setErrors
+} from './adminActions'
+
+export {
+    GET_VOLUNTEERS,
+    GET_VOLUNTEERS_RES,
+    GET_VOLUNTEERS_ERR,
+    getAllUsers,
+    getVolunteers
+} from './studentActions'
+
 
 export const SET_ADMIN = 'SET_ADMIN';
 export const SET_STUDENT = 'SET_STUDENT';

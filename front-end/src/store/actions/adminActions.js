@@ -1,5 +1,4 @@
 import { axiosWithAuth } from '../utils/axiosWithAuth';
-import { getVolunteers } from '../actions';
 
 export const GET_TASKS = 'GET_TASKS';
 export const GET_TASKS_RES = 'GET_TASKS';
@@ -12,6 +11,22 @@ export const SET_USER_ID = 'SET_USER_ID';
 export const SET_EDITING = 'SET_EDITING';
 export const LOADING_RES = 'LOADING_RES';
 export const SET_ERRORS = 'SET_ERRORS';
+
+export const setUserID = (res) => (dispatch) => {
+    dispatch({ type: SET_USER_ID, payload: res })
+}
+
+export const setEditing = () => (dispatch) => {
+    dispatch({ type: SET_EDITING, payload: res })
+}
+
+export const loadingRes = () => (dispatch) => {
+    dispatch({ type: LOADING_RES })
+}
+
+export const setErrors = (err) => (dispatch) => {
+    dispatch({ type: GET_TASKS_ERR, payload: err.message })
+}
 
 export const getTasks = () => (dispatch) => {
     dispatch({ type: GET_TASKS });
@@ -48,36 +63,15 @@ export const editTask = (id, task) => (dispatch) => {
     })
 }
 
-export const deleteTask = (id, task) => (dispatch) => {
+export const deleteTask = (task) => (dispatch) => {
 
-    axiosWithAuth().delete(`api/tasks/${id}`)
+    axiosWithAuth().delete(`api/tasks/${task.id}`)
     .then(res=> {
         dispatch({ type: DELETE_TASK, payload: res.data })
     })
     .catch(err => {
         console.log(err);
     })
-
-export const setUserID = (res) => (dispatch) => {
-    dispatch({ type: SET_USER_ID, payload: res })
 }
-
-export const setEditing = () => (dispatch) => {
-    dispatch({ type: SET_EDITING, payload: res })
-}
-
-export const setEditing = () => (dispatch) => {
-    dispatch({ type: SET_EDITING, payload: res })
-}
-
-export const loadingRes = () => (dispatch) => {
-    dispatch({ type: LOADING_RES })
-}
-
-export const setErrors = (err) => (dispatch) => {
-    dispatch({ type: GET_TASKS_ERR, payload: err.message })
-}
-
-
 
 
