@@ -3,14 +3,11 @@ import TaskList from "./TaskList";
 import * as yup from "yup";
 
 const initialFormState = {
-  due: "",
-  task: "",
+  todos: "",
 }
 
 const formSchema = yup.object().shape({
-  due: yup
-    .string(),
-  task: yup
+  todos: yup
     .string()
     .min(1, "You must enter a task description.")
 })
@@ -55,21 +52,14 @@ export default function CreateTask() {
   return (
     <div className="create-task-container">
       <form onSubmit={submit}>
-        <label htmlFor="due">Due Date: </label>
-        <input 
-          name="due"
-          type="text"
-          value={formState.due}
-          onChange={updateForm}
-        />
-        <label htmlFor="task">Task: </label>
+        <label htmlFor="todos">Task: </label>
         <textarea 
-          name="task"
+          name="todos"
           placeholder="Enter your task here."
-          value={formState.task}
+          value={formState.todos}
           onChange={updateForm}
         />
-        {formErrors.task && <p className="error">{formErrors.task}</p>}
+        {formErrors.todos && <p className="error">{formErrors.todos}</p>}
         <button type="submit">Add Task</button>
       </form>
       {taskList.map((task, idx) => {
@@ -77,8 +67,7 @@ export default function CreateTask() {
           <TaskList 
             key={idx}
             id={idx}
-            due={task.due}
-            task={task.task}
+            task={task.todos}
             deleteTask={deleteTask}      
           />
         )
