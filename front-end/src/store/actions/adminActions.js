@@ -31,7 +31,7 @@ export const setErrors = (err) => (dispatch) => {
 export const getTasks = () => (dispatch) => {
     dispatch({ type: GET_TASKS });
 
-    axiosWithAuth().get('api/tasks')
+    axiosWithAuth().get('api/todos')
     .then(res=> {
         dispatch({ type: GET_TASKS_RES, payload: res.data })
     })
@@ -43,7 +43,7 @@ export const getTasks = () => (dispatch) => {
 export const addTasks = (task) => (dispatch) => {
     dispatch({ type: GET_TASKS });
 
-    axiosWithAuth().post('api/tasks', task)
+    axiosWithAuth().post('api/todos', task)
     .then(res=> {
         console.log(res);
     })
@@ -54,7 +54,7 @@ export const addTasks = (task) => (dispatch) => {
 
 export const editTask = (id, task) => (dispatch) => {
 
-    axiosWithAuth().put(`api/tasks/${id}`, task)
+    axiosWithAuth().put(`api/todos/${id}`, task)
     .then(res=> {
         dispatch({ type: EDIT_TASK, payload: res.data })
     })
@@ -65,7 +65,7 @@ export const editTask = (id, task) => (dispatch) => {
 
 export const deleteTask = (task) => (dispatch) => {
 
-    axiosWithAuth().delete(`api/tasks/${task.id}`)
+    axiosWithAuth().delete(`api/todos/${task.id}`)
     .then(res=> {
         dispatch({ type: DELETE_TASK, payload: res.data })
     })
