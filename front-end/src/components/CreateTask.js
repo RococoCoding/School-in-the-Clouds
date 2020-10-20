@@ -29,6 +29,9 @@ export default function CreateTask() {
         newList.push(formState);
         setTaskList(newList);
         setFormState(initialFormState);
+        axios.post("https://reqres.in/api/users", taskList)
+          .then(res=>console.log(res))
+          .catch(err=>console.log(err));
       })
       .catch(err => {
         let errors = err.inner;
