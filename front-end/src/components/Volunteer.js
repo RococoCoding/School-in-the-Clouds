@@ -2,8 +2,8 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getTasks } from '../store/actions/master';
 export const VolunteerView = () => {
-    // const tasks = useSelector(state => state.memberReducer.tasks);
-    // const loading = useSelector(state => state.memberReducer.isLoading);
+    const tasks = useSelector(state => state.memberReducer.tasks);
+    const loading = useSelector(state => state.memberReducer.isLoading);
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(getTasks())
