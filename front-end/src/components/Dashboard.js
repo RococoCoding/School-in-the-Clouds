@@ -4,7 +4,7 @@ import { Admin } from './Admin';
 import { Student } from './Student';
 import { Volunteer } from './Volunteer';
 
-export const Dashboard = () => {
+const Dashboard = () => {
     const admin = useSelector(state => state.landingReducer.admin);
     const student = useSelector(state => state.landingReducer.student);
     const volunteer = useSelector(state => state.landingReducer.volunteer);
@@ -25,3 +25,5 @@ export const Dashboard = () => {
         </>
     )
 }
+
+export default Dashboard;

@@ -1,4 +1,5 @@
 import React, {useState} from "react";
+import { setAdmin, setStudent, setVolunteer, toggleLanding, setUserID, setLoading, loadingRes, setErrors } from '../store';
 import { connect, useDispatch } from "react-redux";
 import axios from "axios";
 import * as yup from "yup";
@@ -30,10 +31,30 @@ export default function LoginForm() {
     formSchema.validate(formState, {abortEarly:false})
       .then(valid => {
         setFormErrors({});
-        axios.post("https://reqres.in/api/users", formState)
-          .then(res => console.log(res))
-          .catch(err => console.log(err));
+        axios.post('https://cloudskool.herokuapp.com/api/auth/login', formState)
+          .then(res => {
+            if(res.data.role === 'admin'){
+              dispatchEvent(setAdmin());
+            }else if(res.data.role === 'student'){
+              dispatchEvent(setStudent());
+            }else if(res.data.role === 'volunteer'){
+              dispatchEvent(setVolunteer());
+            }
+           
+            dispatch(setUserID(res.data.id))
+            dispatch(loadingRes())
+
+            return res
       })
+    })
+    
+          .then(res => {
+            if(res.status === 200 && res.data) {
+              localStorage.setItem('token', res.data.token)
+              push('/dashboard')
+            }
+          })
+
       .catch(err => {
         let errors = err.inner;
         let errorsObj = {};
@@ -42,10 +63,8 @@ export default function LoginForm() {
           errorsObj[key] = errors[i].errors[0]; //put all errors in an obj to mimic errorsState
         }
         setFormErrors(errorsObj); 
-      }
-    );
-  }
-
+      });
+  
   return (
     <div className="login-form-container">
       <form onSubmit={submit}>
@@ -73,4 +92,5 @@ export default function LoginForm() {
       </form>
     </div>
   )
+}
 }

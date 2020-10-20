@@ -1,4 +1,4 @@
-import { TOGGLE_LANDING, SET_ADMIN, SET_STUDENT, SET_VOLUNTEER, SET_USER_ID } from '../actions';
+import { TOGGLE_LANDING, SET_ADMIN, SET_STUDENT, SET_VOLUNTEER, SET_USER_ID } from '../actions/master';
 
 const initialState = {
     isSignUp: false,
@@ -10,11 +10,11 @@ const initialState = {
 
 export const registerReducer = (state = initialState, action) => {
     switch(action.type){
-        // case TOGGLE_LANDING:
-        //     return {
-        //         ...state,
-        //         isSignUp: !state.isSignUp
-        //     };
+        case TOGGLE_LANDING:
+            return {
+                ...state,
+                isSignUp: !state.isSignUp
+            };
         case SET_ADMIN:
             return {
                 admin: true,
@@ -33,10 +33,10 @@ export const registerReducer = (state = initialState, action) => {
                 student: false,
                 volunteer: true
             };
-        case SET_MEMBER_ID:
+        case SET_USER_ID:
             return {
                 ...state,
-                memberID: action.payload
+                userID: action.payload
             }
         default:
             return state

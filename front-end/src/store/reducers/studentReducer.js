@@ -1,5 +1,5 @@
-import { GET_TASKS, GET_TASKS_RES, GET_TASKS_ERR, FETCH_VOLUNTEERS, FETCH_VOLUNTEERS_RES, FETCH_VOLUNTEERS_ERR, SET_EDITING } from '../actions';
-import { LOADNG_RES } from '../actions/signInActions';
+import { GET_TASKS, GET_TASKS_RES, GET_TASKS_ERR, GET_VOLUNTEERS, GET_VOLUNTEERS_RES, GET_VOLUNTEERS_ERR } from '../actions/master';
+import { LOADING_RES } from '../actions/master';
 
 const initialState = {
     isLoading: false,
@@ -9,7 +9,7 @@ const initialState = {
     isEditing: false
 };
 
-export const memberReducer = (state = initialState, action) => {
+export const studentReducer = (state = initialState, action) => {
     switch(action.type){
         case GET_TASKS:
             return {
@@ -30,28 +30,23 @@ export const memberReducer = (state = initialState, action) => {
                 isLoading: false,
                 error: action.payload
             };
-        case FETCH_VOLUNTEERS:
+        case GET_VOLUNTEERS:
             return {
                 ...state,
                 loadingState: true,
                 error: ''
             };
-        case FETCH_VOLUNTEERS_RES:
+        case GET_VOLUNTEERS_RES:
             return {
                 ...state,
                 volunteers: action.payload,
                 loadingState: false
             };
-        case FETCH_VOLUNTEERS_ERR:
+        case GET_VOLUNTEERS_ERR:
             return {
                 ...state,
                 error: action.payload
             };
-        case SET_EDITING:
-            return {
-                ...state,
-                isEditing: !state.isEditing
-            }
         case LOADING_RES:
             return {
                 ...state,

@@ -16,7 +16,7 @@ export const setUserID = (res) => (dispatch) => {
     dispatch({ type: SET_USER_ID, payload: res })
 }
 
-export const setEditing = () => (dispatch) => {
+export const setEditing = (res) => (dispatch) => {
     dispatch({ type: SET_EDITING, payload: res })
 }
 
