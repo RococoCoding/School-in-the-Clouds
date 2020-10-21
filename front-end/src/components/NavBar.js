@@ -1,6 +1,16 @@
 import React from "react";
 import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import styled from "styled-components";
+
+const LinkButton = styled.div` 
+    padding: 15% 0;
+    &:hover {
+        cursor: pointer;
+    }
+    font-size: 1rem;
+`
+
 
 function NavBar(props) {
     const marketing = `build-week-1-a19ugbcgs.vercel.app/index.html`
@@ -25,7 +35,7 @@ function NavBar(props) {
             :
 
             <nav>
-                <button onClick={() => push('/')}>Home Page</button>
+                <LinkButton onClick={() => push('/')}>Home Page</LinkButton>
             </nav>
             }
 

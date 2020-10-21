@@ -1,17 +1,14 @@
 :root {
-  --darkgrey: #242B33;
-  --aqua: #21B2A6;
+  --grey: #2B343D;
+  --aqua: #29E0BF;
   --purple: #505393;
+  --darkpurple: #3F4174;
 }
 body {
   margin: 0;
   font-family: 'Open Sans', Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #242B33;
+  background-color: var(--grey);
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
