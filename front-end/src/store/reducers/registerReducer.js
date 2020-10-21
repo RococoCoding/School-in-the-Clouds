@@ -1,4 +1,4 @@
-import { TOGGLE_LANDING, SET_ADMIN, SET_STUDENT, SET_VOLUNTEER, SET_USER_ID } from '../actions/master';
+import { TOGGLE_MAIN, SET_ADMIN, SET_STUDENT, SET_VOLUNTEER, SET_USER_ID } from '../actions/master';
 
 const initialState = {
     isSignUp: false,
@@ -10,7 +10,7 @@ const initialState = {
 
 export const registerReducer = (state = initialState, action) => {
     switch(action.type){
-        case TOGGLE_LANDING:
+        case TOGGLE_MAIN:
             return {
                 ...state,
                 isSignUp: !state.isSignUp

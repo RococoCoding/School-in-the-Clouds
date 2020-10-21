@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { axiosWithAuth } from "../utils/axiosWithAuth";
+import { axiosWithAuth } from "../store/utils/axiosWithAuth";
 import { setErrors } from '../store/actions/master';
 
 
-export const Profile = () => {
+const Profile = () => {
     const userID = useSelector(state => state.registerReducer.userID);
     const [user, setUser] = useState({});
     const dispatch = useDispatch();
@@ -32,3 +32,5 @@ export const Profile = () => {
     </div>
     )
 }
+
+export default Profile;

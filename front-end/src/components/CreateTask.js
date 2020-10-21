@@ -6,7 +6,8 @@ import TaskList from "./TaskList";
 import * as yup from "yup";
 
 const initialFormState = {
-  todos: "",
+  title: '',
+  description: ''
 }
 
 const formSchema = yup.object().shape({
@@ -47,11 +48,20 @@ export default function CreateTask() {
   return (
     <div className="create-task-container">
       <form onSubmit={submit}>
-        <label htmlFor="todos">Task: </label>
+        <label htmlFor="title">Task: </label>
         <textarea 
           name="todos"
-          placeholder="Enter your task here."
-          value={formState.todos}
+          type='text'
+          placeholder="Task Title"
+          value={formState.title}
+          onChange={updateForm}
+        />
+        <label htmlFor="description">Description: </label>
+         <textarea 
+          name="description"
+          type='text'
+          placeholder="Enter description here."
+          value={formState.description}
           onChange={updateForm}
         />
         {formErrors.todos && <p className="error">{formErrors.todos}</p>}

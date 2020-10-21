@@ -1,4 +1,5 @@
 import { axiosWithAuth } from '../utils/axiosWithAuth';
+import { getVolunteers } from './studentActions';
 
 export const GET_TASKS = 'GET_TASKS';
 export const GET_TASKS_RES = 'GET_TASKS';
@@ -11,6 +12,7 @@ export const SET_USER_ID = 'SET_USER_ID';
 export const SET_EDITING = 'SET_EDITING';
 export const LOADING_RES = 'LOADING_RES';
 export const SET_ERRORS = 'SET_ERRORS';
+export const DELETE_USER = 'DELETE_USER';
 
 export const setUserID = (res) => (dispatch) => {
     dispatch({ type: SET_USER_ID, payload: res })
@@ -68,6 +70,17 @@ export const deleteTask = (task) => (dispatch) => {
     axiosWithAuth().delete(`api/todos/${task.id}`)
     .then(res=> {
         dispatch({ type: DELETE_TASK, payload: res.data })
+    })
+    .catch(err => {
+        console.log(err);
+    })
+}
+
+export const deleteUser = (user) => (dispatch) => {
+
+    axiosWithAuth().delete(`api/user/${user.id}`)
+    .then(res=> {
+        dispatch(getVolunteers())
     })
     .catch(err => {
         console.log(err);

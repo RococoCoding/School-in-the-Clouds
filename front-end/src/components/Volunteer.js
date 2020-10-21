@@ -1,20 +1,23 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getTasks } from '../store/actions/master';
-export const VolunteerView = () => {
-    const tasks = useSelector(state => state.memberReducer.tasks);
+
+export const Volunteer = () => {
+    const tasks = useSelector(state => state.memberReducer.todos);
     const loading = useSelector(state => state.memberReducer.isLoading);
     const dispatch = useDispatch()
+
     useEffect(() => {
         dispatch(getTasks())
     }, [])
+
     return (
               <div>   
                  <div className='top'>
                  <h2>Tasks that need <em>your</em> help completing...</h2>
                 </div>
                     <div className='bot'>
-                    {todos.map(todos => {
+                    {tasks.map(todos => {
                         return (
                             <ul>
                             <div className='tasks' key={todos.id} >
@@ -30,3 +33,4 @@ export const VolunteerView = () => {
         </div>
     )
 }
+

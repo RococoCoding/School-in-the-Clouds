@@ -16,6 +16,7 @@ export {
     addTasks,
     editTask,
     deleteTask,
+    deleteUser,
     setUserID,
     setEditing,
     loadingRes,
@@ -38,7 +39,7 @@ export const SET_VOLUNTEER = 'SET_VOLUNTEER';
 export const TOGGLE_ADD = 'TOGGLE_ADD';
 export const TOGGLE_USER = 'TOGGLE_USER';
 export const TOGGLE_TASK = 'TOGGLE_TASK';
-export const TOGGLE_LANDING = 'TOGGLE_LANDING';
+export const TOGGLE_MAIN = 'TOGGLE_MAIN';
 export const TOGGLE_USER_VIEW = 'TOGGLE_USER_VIEW';
 export const TOGGLE_TASK_VIEW = 'TOGGLE_TASK_VIEW';
 
@@ -66,8 +67,8 @@ export const toggleTask = () => (dispatch) => {
     dispatch({ type: TOGGLE_TASK })
 }
 
-export const toggleLanding = () => (dispatch) => {
-    dispatch({ type: TOGGLE_LANDING })
+export const toggleMain = () => (dispatch) => {
+    dispatch({ type: TOGGLE_MAIN })
 }
 
 export const toggleViewUser = () => (dispatch) => {

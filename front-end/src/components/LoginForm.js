@@ -1,7 +1,8 @@
 import React, {useState} from "react";
-import { setAdmin, setStudent, setVolunteer, toggleLanding, setUserID, setLoading, loadingRes, setErrors } from '../store';
-import { connect, useDispatch } from "react-redux";
-import axios from "axios";
+import { useHistory } from 'react-router-dom';
+import { setAdmin, setStudent, setVolunteer, setUserID, loadingRes, toggleMain } from '../store/actions/master';
+import { useDispatch } from "react-redux";
+import { axiosWithAuth } from '../store/utils/axiosWithAuth';
 import * as yup from "yup";
 
 const initialFormState = {
@@ -12,6 +13,8 @@ const initialFormState = {
 export default function LoginForm() {
   const [formState, setFormState] = useState(initialFormState);
   const [formErrors, setFormErrors] = useState({});
+  const dispatch = useDispatch();
+  const { push } = useHistory();
 
   const formSchema = yup.object().shape({
     username: yup
@@ -31,14 +34,15 @@ export default function LoginForm() {
     formSchema.validate(formState, {abortEarly:false})
       .then(valid => {
         setFormErrors({});
-        axios.post('https://cloudskool.herokuapp.com/api/auth/login', formState)
+        axiosWithAuth()
+        .post('/auth/login', formState)
           .then(res => {
             if(res.data.role === 'admin'){
-              dispatchEvent(setAdmin());
+              dispatch(setAdmin());
             }else if(res.data.role === 'student'){
-              dispatchEvent(setStudent());
+              dispatch(setStudent());
             }else if(res.data.role === 'volunteer'){
-              dispatchEvent(setVolunteer());
+              dispatch(setVolunteer());
             }
            
             dispatch(setUserID(res.data.id))
@@ -64,7 +68,7 @@ export default function LoginForm() {
         }
         setFormErrors(errorsObj); 
       });
-  
+    }
   return (
     <div className="login-form-container">
       <form onSubmit={submit}>
@@ -89,8 +93,12 @@ export default function LoginForm() {
         {formErrors.password && <p className="error">{formErrors.password}</p>}
         
         <button type="submit">Submit</button>
+
+        <div className='select-submit'>
+        <p>Not yet a User? <span onClick={() => dispatch(toggleMain())}>Sign Up</span></p>
+        </div>
+
       </form>
     </div>
   )
-}
 }

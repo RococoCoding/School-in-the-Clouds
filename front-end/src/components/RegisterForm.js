@@ -36,7 +36,7 @@ export default function RegisterForm() {
     formSchema.validate(formState, {abortEarly:false})
       .then(valid => {
         setFormErrors({});
-        axios.post('https://cloudskool.herokuapp.com/api/auth/register', formState)
+        axios.post('/auth/register', formState)
           .then(res => { 
             localStorage.setItem('token',
             res.data);

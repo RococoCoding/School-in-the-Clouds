@@ -17,6 +17,7 @@ export const Admin = () => {
     }, [])
 
     return (
+        <>
         <div className='controls'>
             {
                 taskView 
@@ -34,7 +35,7 @@ export const Admin = () => {
                 </button>
             }
             </div>
-
+        
         <div className='task-controls'>
             {
                 taskView && tasks ? tasks.map(task => {
@@ -77,7 +78,8 @@ export const Admin = () => {
                 null
 
     }
-    </div>
-    )
+    </div>  
+    </>
+    )  
 }
       

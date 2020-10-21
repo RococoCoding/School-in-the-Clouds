@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getVolunteers } from '../store/actions/master';
 
 export const Student = () => {
-    const volunteers = useSelector(state.studentReducer.volunteers);
+    const volunteers = useSelector(state => state.studentReducer.volunteers);
     const taskView = useSelector(state => state.adminReducer.taskView);
     const userView = useSelector(state => state.adminReducer.userView);
     const dispatch = useDispatch();

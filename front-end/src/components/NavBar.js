@@ -1,17 +1,34 @@
 import React from "react";
-// import { connect } from "react-redux";
-import { BrowserRouter as Router, Link} from "react-router-dom";
+import { useHistory } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 function NavBar(props) {
     const marketing = `build-week-1-a19ugbcgs.vercel.app/index.html`
-
+    const { push } = useHistory();
+    const admin = useSelector(state => state.registerReducer.admin);
+    const student = useSelector(state => state.registerReducer.student);
+    const volunteer = useSelector(state => state.registerReducer.volunteer);
+    // const dispatch = useDispatch();
+    
+  
     return(
         <div className="navContainer">
-            <Router>
-            <a href = {marketing}>Home Page</a>
-            <Link to = "/loginform">Login</Link>
-            <Link to = "/registerform">Register</Link>
-            </Router>
+            { (admin || student || volunteer) 
+            
+            ?
+
+            <nav>
+                <button onClick={() => push('/dashboard')}>Dashboard</button>
+                <button onClick={() => push('/profile')}>Profile</button>
+            </nav>
+
+            :
+
+            <nav>
+                <button onClick={() => push('/')}>Home Page</button>
+            </nav>
+            }
+
         </div>
     )
 }
