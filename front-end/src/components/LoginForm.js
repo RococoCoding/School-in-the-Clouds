@@ -1,6 +1,8 @@
 import React, {useState} from "react";
-import { connect, useDispatch } from "react-redux";
-import axios from "axios";
+import { useHistory } from 'react-router-dom';
+import { setAdmin, setStudent, setVolunteer, setUserID, loadingRes, toggleMain } from '../store/actions/master';
+import { useDispatch } from "react-redux";
+import { axiosWithAuth } from '../store/utils/axiosWithAuth';
 import * as yup from "yup";
 
 const initialFormState = {
@@ -11,6 +13,8 @@ const initialFormState = {
 export default function LoginForm() {
   const [formState, setFormState] = useState(initialFormState);
   const [formErrors, setFormErrors] = useState({});
+  const dispatch = useDispatch();
+  const { push } = useHistory();
 
   const formSchema = yup.object().shape({
     username: yup
@@ -30,10 +34,31 @@ export default function LoginForm() {
     formSchema.validate(formState, {abortEarly:false})
       .then(valid => {
         setFormErrors({});
-        axios.post("https://reqres.in/api/users", formState)
-          .then(res => console.log(res))
-          .catch(err => console.log(err));
+        axiosWithAuth()
+        .post('/auth/login', formState)
+          .then(res => {
+            if(res.data.role === 'admin'){
+              dispatch(setAdmin());
+            }else if(res.data.role === 'student'){
+              dispatch(setStudent());
+            }else if(res.data.role === 'volunteer'){
+              dispatch(setVolunteer());
+            }
+           
+            dispatch(setUserID(res.data.id))
+            dispatch(loadingRes())
+
+            return res
       })
+    })
+    
+          .then(res => {
+            if(res.status === 200 && res.data) {
+              localStorage.setItem('token', res.data.token)
+              push('/dashboard')
+            }
+          })
+
       .catch(err => {
         let errors = err.inner;
         let errorsObj = {};
@@ -42,10 +67,8 @@ export default function LoginForm() {
           errorsObj[key] = errors[i].errors[0]; //put all errors in an obj to mimic errorsState
         }
         setFormErrors(errorsObj); 
-      }
-    );
-  }
-
+      });
+    }
   return (
     <div className="login-form-container">
       <form onSubmit={submit}>
@@ -70,6 +93,11 @@ export default function LoginForm() {
         {formErrors.password && <p className="error">{formErrors.password}</p>}
         
         <button type="submit">Submit</button>
+
+        <div className='select-submit'>
+        <p>Not yet a User? <span onClick={() => dispatch(toggleMain())}>Sign Up</span></p>
+        </div>
+
       </form>
     </div>
   )

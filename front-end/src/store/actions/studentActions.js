@@ -19,10 +19,9 @@ export const getAllUsers = () => (dispatch) => {
 export const getVolunteers = () => (dispatch) => {
     dispatch({ type: GET_VOLUNTEERS })
 
-    axiosWithAuth().get('api/users/filter?role=volunteer')
+    axiosWithAuth().get('api/users')
     .then(res => {
-
-        dispatch({ type: GET_VOLUNTEERS_RES, payload: res.data.data })
+        dispatch({ type: GET_VOLUNTEERS_RES, payload: res.data.volunteers })
     })
     .catch(err => {
         dispatch({ type: GET_VOLUNTEERS_ERR, payload: err })

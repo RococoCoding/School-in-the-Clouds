@@ -1,9 +1,13 @@
 import React, {useState} from "react";
+import { useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { addTasks, getTasks, deleteTask } from '../store/actions/master';
 import TaskList from "./TaskList";
 import * as yup from "yup";
 
 const initialFormState = {
-  todos: "",
+  title: '',
+  description: ''
 }
 
 const formSchema = yup.object().shape({
@@ -16,6 +20,9 @@ export default function CreateTask() {
   const [formState, setFormState] = useState(initialFormState);
   const [formErrors, setFormErrors] = useState({});
   const [taskList, setTaskList] = useState([]);
+  const dispatch = useDispatch();
+  const { push } = useHistory();
+
 
   function updateForm(e) {
     setFormState({...formState, [e.target.name]: e.target.value});
@@ -24,42 +31,37 @@ export default function CreateTask() {
   function submit(e) {
     e.preventDefault();
     formSchema.validate(formState, {abortEarly:false})
-      .then(valid => {
-        let newList = [...taskList];
-        newList.push(formState);
-        setTaskList(newList);
-        setFormState(initialFormState);
-        axios.post("https://reqres.in/api/users", taskList)
-          .then(res=>console.log(res))
-          .catch(err=>console.log(err));
-      })
-      .catch(err => {
-        let errors = err.inner;
-        let errorsObj = {};
-        for (let i in errors) {
-          let key = errors[i].params.path;
-          errorsObj[key] = errors[i].errors[0]; //put all errors in an obj to mimic errorsState
-        }
-        setFormErrors(errorsObj); 
-      })
+    dispatch(addTasks(formState));
+    dispatch(getTasks())
+    push('/dashboard')
+
+    // dispatch(deleteTask(id)) 
+    //   let newList = [...taskList];
+    //   // console.log(key)
+    //   newList.splice(id, 1);
+    //   setTaskList(newList);
    
   }
-  
-  function deleteTask(id) {
-    let newList = [...taskList];
-    // console.log(key)
-    newList.splice(id, 1);
-    setTaskList(newList);
-  }
+
+
 
   return (
     <div className="create-task-container">
       <form onSubmit={submit}>
-        <label htmlFor="todos">Task: </label>
+        <label htmlFor="title">Task: </label>
         <textarea 
           name="todos"
-          placeholder="Enter your task here."
-          value={formState.todos}
+          type='text'
+          placeholder="Task Title"
+          value={formState.title}
+          onChange={updateForm}
+        />
+        <label htmlFor="description">Description: </label>
+         <textarea 
+          name="description"
+          type='text'
+          placeholder="Enter description here."
+          value={formState.description}
           onChange={updateForm}
         />
         {formErrors.todos && <p className="error">{formErrors.todos}</p>}

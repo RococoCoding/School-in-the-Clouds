@@ -1,4 +1,5 @@
 import React, {useState} from "react";
+import { useHistory } from 'react-router-dom';
 import axios from "axios";
 import * as yup from "yup";
 
@@ -12,6 +13,7 @@ const initialFormState = {
 export default function RegisterForm() {
   const [formState, setFormState] = useState(initialFormState);
   const [formErrors, setFormErrors] = useState({});
+  const { push } = useHistory();
 
   const formSchema = yup.object().shape({
     username: yup
@@ -34,10 +36,13 @@ export default function RegisterForm() {
     formSchema.validate(formState, {abortEarly:false})
       .then(valid => {
         setFormErrors({});
-        axios.post("https://reqres.in/api/users", formState)
-          .then(res => console.log(res))
-          .catch(err => console.log(err));
+        axios.post('/auth/register', formState)
+          .then(res => { 
+            localStorage.setItem('token',
+            res.data);
+            push('/loginform');
       })
+    })
       .catch(err => {
         let errors = err.inner;
         let errorsObj = {};
@@ -46,9 +51,9 @@ export default function RegisterForm() {
           errorsObj[key] = errors[i].errors[0]; //put all errors in an obj to mimic errorsState
         }
         setFormErrors(errorsObj); 
+      })
+        setFormState(initialFormState);
       }
-    );
-  }
 
   return (
     <div className="register-form-container">
