@@ -28,8 +28,8 @@ export const adminReducer = (state = initialState, action) => {
         case TOGGLE_USER_VIEW:
             return {
                 ...state,
-                taskView: true,
-                userView: false
+                taskView: false,
+                userView: true
                 }
         case TOGGLE_TASK_VIEW:
             return {

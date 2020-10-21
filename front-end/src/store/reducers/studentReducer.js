@@ -4,7 +4,7 @@ import { LOADING_RES } from '../actions/master';
 const initialState = {
     isLoading: false,
     error: '',
-    tasks: [],
+    todos: [],
     volunteers: [],
     isEditing: false
 };

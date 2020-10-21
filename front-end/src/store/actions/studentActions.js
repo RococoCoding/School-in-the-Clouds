@@ -7,7 +7,7 @@ export const GET_VOLUNTEERS_ERR = 'GET_VOLUNTEERS_ERR';
 export const getAllUsers = () => (dispatch) => {
     dispatch({ type: GET_VOLUNTEERS })
 
-    axiosWithAuth().get('api/users')
+    axiosWithAuth().get('/users')
     .then(res => {
         dispatch({ type: GET_VOLUNTEERS_RES, payload: res.data.data })
     })
@@ -19,7 +19,7 @@ export const getAllUsers = () => (dispatch) => {
 export const getVolunteers = () => (dispatch) => {
     dispatch({ type: GET_VOLUNTEERS })
 
-    axiosWithAuth().get('api/users')
+    axiosWithAuth().get('/users')
     .then(res => {
         dispatch({ type: GET_VOLUNTEERS_RES, payload: res.data.volunteers })
     })

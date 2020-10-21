@@ -5,6 +5,7 @@ import RegisterForm from './RegisterForm';
 
 
 
+
 export const MainPage = () => {
     const signUp = useSelector(state => state.registerReducer.isSignUp);
 

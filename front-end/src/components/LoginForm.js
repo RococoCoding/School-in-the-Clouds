@@ -8,6 +8,7 @@ import * as yup from "yup";
 const initialFormState = {
   username: "",
   password: "",
+  role: "",
 }
 
 export default function LoginForm() {
@@ -15,6 +16,7 @@ export default function LoginForm() {
   const [formErrors, setFormErrors] = useState({});
   const dispatch = useDispatch();
   const { push } = useHistory();
+  const history = useHistory();
 
   const formSchema = yup.object().shape({
     username: yup
@@ -30,35 +32,44 @@ export default function LoginForm() {
   }
 
   function submit(e) {
+    const user = {
+      username: formState.username.trim(),
+      password: formState.password,
+      role: formState.role
+    }
+
     e.preventDefault();
     formSchema.validate(formState, {abortEarly:false})
       .then(valid => {
         setFormErrors({});
+
         axiosWithAuth()
-        .post('/auth/login', formState)
+        .post('/auth/login', user)
+        
      
           .then(res => {
             window.localStorage.setItem('token', res.data.token)
-            push('/dashboard')
-
+            console.log(res.data)
             if(res.data.role === 'admin'){
-              dispatch(setAdmin());
-              push('/')
+              //dispatch(setAdmin());
+              history.push('/admin')
 
             }else if(res.data.role === 'student'){
-              dispatch(setStudent());
-              push('/')
+              //dispatch(setStudent());
+             history.push('/student')
 
-            }else if(res.data.role === 'volunteer'){
-              dispatch(setVolunteer());
-              push('/')
+            }else{
+              //dispatch(setVolunteer());
+             history.push('/volunteer')
             }
            
             dispatch(setUserID(res.data.id))
+         
             dispatch(loadingRes())
         
 
       })
+      
     })
     
           // .then(res => {
@@ -77,6 +88,7 @@ export default function LoginForm() {
         setFormErrors(errorsObj); 
       });
     }
+
   return (
     <div className="login-form-container">
       <form onSubmit={submit}>
@@ -99,6 +111,22 @@ export default function LoginForm() {
           onChange={updateForm}
         />
         {formErrors.password && <p className="error">{formErrors.password}</p>}
+
+
+        <label htmlFor="role">Role: </label>
+                        <select
+                        type="dropdown"
+                        name="role"
+                        onChange={updateForm}
+                        >
+                        <option value="">Pick a role</option>
+                        <option value="admin">admin</option>
+                        <option value="student">student</option>
+                        <option value="volunteer">volunteer</option>
+                        </select>
+                {formErrors.role && <p className="error">{formErrors.role}</p>}
+
+
         
         <button type="submit">Submit</button>
 

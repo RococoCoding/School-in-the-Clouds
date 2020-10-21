@@ -3,8 +3,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getTasks } from '../store/actions/master';
 
 export const Volunteer = () => {
-    const tasks = useSelector(state => state.memberReducer.todos);
-    const loading = useSelector(state => state.memberReducer.isLoading);
+    const tasks = useSelector(state => state.studentReducer.todos);
+    //const loading = useSelector(state => state.sReducer.isLoading);
     const dispatch = useDispatch()
 
     useEffect(() => {

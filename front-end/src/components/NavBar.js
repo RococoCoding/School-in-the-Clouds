@@ -2,7 +2,7 @@ import React from "react";
 import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-function NavBar(props) {
+export const NavBar=()=> {
     const marketing = `build-week-1-a19ugbcgs.vercel.app/index.html`
     const { push } = useHistory();
     const admin = useSelector(state => state.registerReducer.admin);
@@ -33,4 +33,3 @@ function NavBar(props) {
     )
 }
 
-export default NavBar;
