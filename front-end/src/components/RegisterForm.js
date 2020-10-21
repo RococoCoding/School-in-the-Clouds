@@ -117,19 +117,44 @@ import styled from 'styled-components';
 import axios from 'axios';
 import * as yup from 'yup';
 
+const RegisterPageContainer = styled.div`
+  text-align: center;
+  color: white;
+  h2 {
+    margin: 0 auto 2% auto;
+  }
+  .input-container {
+    margin: 10% auto;
+  }
+  form {
+    margin: 7% 10%;
+  }
+  button {
+    background-color: var(--purple);
+    font-size: 1rem;
+    padding: 2% 4%;
+    border-radius: 3px;
+    color: white;
+    font-weight: bolder;
+    &:hover {
+      color: var(--aqua);
+    }
+  }
+  .error {
+    color: red;
+  }
+`
 
 const initialFormValues = {
-   
-    username: '',
-    password: '',
-    role: ''
+  username: '',
+  password: '',
+  role: ''
 }
 
 const initialFormErrors = {
-  
-    username: '',
-    password: '',
-    role: ''
+  username: '',
+  password: '',
+  role: ''
 }
 
 const initialDisabled = true
@@ -213,53 +238,54 @@ export default function RegisterStudent() {
     }, [formValues])
     
     return (
-    <div>
-        <form onSubmit={onSubmit}> 
-            <div className='form container' >
-                <div className='form-group submit'>
-                 <h2>Sign Up</h2>
-                 <div className='register-form-container'>
+    <RegisterPageContainer>
+      <form onSubmit={onSubmit}> 
+        <div className='form-group submit'>
+          <h2>Sign Up</h2>
+          <div className='register-form-container'>
+            <div className="input-container">
+              <label htmlFor="username">Username: </label>
+              <input 
+                type="text"
+                name="username"
+                placeholder="Username"
+                value={formValues.username}
+                onChange={onInputChange}
+              />
+              {formErrors.username && <p className="error">{formErrors.username}</p>}
+            </div>
 
-                    <label htmlFor="username">Username: </label>
-                            <input 
-                            type="text"
-                            name="username"
-                            placeholder="Username"
-                            value={formValues.username}
-                            onChange={onInputChange}
-                            />
-                 {formErrors.username && <p className="error">{formErrors.username}</p>}
+            <div className="input-container">
+              <label htmlFor="password">Password: </label>
+              <input 
+                type="text"
+                name="password"
+                placeholder="Password"
+                value={formValues.password}
+                onChange={onInputChange}
+              />
+              {formErrors.password && <p className="error">{formErrors.password}</p>}
+            </div>
 
-                 <label htmlFor="password">Password: </label>
-                            <input 
-                            type="text"
-                            name="password"
-                            placeholder="Password"
-                            value={formValues.password}
-                            onChange={onInputChange}
-                            />
-                {formErrors.password && <p className="error">{formErrors.password}</p>}
-
-        <label htmlFor="role">Role: </label>
-                        <select
-                        type="dropdown"
-                        name="role"
-                        onChange={onInputChange}
-                        >
-                        <option value="">Pick a role</option>
-                        <option value="admin">Admin</option>
-                        <option value="student">Student</option>
-                        <option value="volunteer">Volunteer</option>
-                        </select>
-                {formErrors.role && <p className="error">{formErrors.role}</p>}
-        
-        <button type="submit">Submit</button>
+            <div className="input-container">
+              <label htmlFor="role">Role: </label>
+              <select
+                type="dropdown"
+                name="role"
+                onChange={onInputChange}
+              >
+              <option value="">Pick a role</option>
+              <option value="admin">Admin</option>
+              <option value="student">Student</option>
+              <option value="volunteer">Volunteer</option>
+              </select>
+              {formErrors.role && <p className="error">{formErrors.role}</p>}
+            </div>
+      
+            <button type="submit">Submit</button>
+          </div>
         </div>
-    </div>
-    </div>
-        </form>
-            
-     </div>    
-
-    )
+      </form>
+    </RegisterPageContainer>    
+  )
 }    

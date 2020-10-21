@@ -9,6 +9,7 @@ const LinkButton = styled.div`
         cursor: pointer;
     }
     font-size: 1rem;
+    letter-spacing: 0.1rem;
 `
 
 

@@ -4,6 +4,43 @@ import { setAdmin, setStudent, setVolunteer, setUserID, loadingRes, toggleMain }
 import { useDispatch } from "react-redux";
 import { axiosWithAuth } from '../store/utils/axiosWithAuth';
 import * as yup from "yup";
+import styled from "styled-components";
+
+const LoginPageContainer = styled.div`
+  text-align: center;
+  color: white;
+  h2 {
+    margin: 0 auto 2% auto;
+  }
+  .input-container {
+    margin: 10% auto;
+  }
+  form {
+    margin: 7% 10%;
+  }
+  button {
+    background-color: var(--purple);
+    font-size: 1rem;
+    padding: 2% 4%;
+    border-radius: 3px;
+    color: white;
+    font-weight: bolder;
+    &:hover {
+      color: var(--aqua);
+    }
+  }
+  .sign-up-link {
+    margin-left: 2%;
+    &:hover {
+      cursor: pointer;
+      color: var(--aqua);
+    }
+  }
+  .error {
+    color: red;
+  }
+`
+
 
 const initialFormState = {
   username: "",
@@ -78,35 +115,40 @@ export default function LoginForm() {
       });
     }
   return (
-    <div className="login-form-container">
+    <LoginPageContainer>
       <form onSubmit={submit}>
-        <label htmlFor="username">Username: </label>
-        <input 
-          type="text"
-          name="username"
-          placeholder="Username"
-          value={formState.username}
-          onChange={updateForm}
-        />
-        {formErrors.username && <p className="error">{formErrors.username}</p>}
+        <div className='form-group submit'>
+          <h2>Log in</h2>
+          <div className="input-container">
+            <label htmlFor="username">Username: </label>
+            <input
+              type="text"
+              name="username"
+              placeholder="Username"
+              value={formState.username}
+              onChange={updateForm}
+            />
+            {formErrors.username && <p className="error">{formErrors.username}</p>}
+          </div>
 
-        <label htmlFor="password">Password: </label>
-        <input 
-          type="text"
-          name="password"
-          placeholder="Password"
-          value={formState.password}
-          onChange={updateForm}
-        />
-        {formErrors.password && <p className="error">{formErrors.password}</p>}
-        
-        <button type="submit">Submit</button>
-
-        <div className='select-submit'>
-        <p>Not yet a User? <span onClick={() => dispatch(toggleMain())}>Sign Up</span></p>
+          <div className="input-container">
+            <label htmlFor="password">Password: </label>
+            <input
+              type="text"
+              name="password"
+              placeholder="Password"
+              value={formState.password}
+              onChange={updateForm}
+            />
+            {formErrors.password && <p className="error">{formErrors.password}</p>}
+          </div>
+          
+          <button type="submit">Submit</button>
+          <div className='visit-sign-up'>
+            <p>Not yet a User?<span className="sign-up-link" onClick={() => dispatch(toggleMain())}> Sign Up</span></p>
+          </div>
         </div>
-
       </form>
-    </div>
+    </LoginPageContainer>
   )
 }

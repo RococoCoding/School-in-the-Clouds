@@ -5,5 +5,13 @@ header {
   text-transform: uppercase;
   font-size: 0.6rem;
   padding: 0 2%;
+  border-bottom: 1px solid white;
+  background-color: var(--grey);
+  letter-spacing: 0.3rem;
+}
+h1 {
+  background: linear-gradient(130deg, rgb(124, 198, 255, 1), rgb(255, 255, 255, 1));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
