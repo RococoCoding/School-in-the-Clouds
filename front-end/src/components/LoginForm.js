@@ -36,28 +36,36 @@ export default function LoginForm() {
         setFormErrors({});
         axiosWithAuth()
         .post('/auth/login', formState)
+     
           .then(res => {
+            window.localStorage.setItem('token', res.data.token)
+            push('/dashboard')
+
             if(res.data.role === 'admin'){
               dispatch(setAdmin());
+              push('/')
+
             }else if(res.data.role === 'student'){
               dispatch(setStudent());
+              push('/')
+
             }else if(res.data.role === 'volunteer'){
               dispatch(setVolunteer());
+              push('/')
             }
            
             dispatch(setUserID(res.data.id))
             dispatch(loadingRes())
+        
 
-            return res
       })
     })
     
-          .then(res => {
-            if(res.status === 200 && res.data) {
-              localStorage.setItem('token', res.data.token)
-              push('/dashboard')
-            }
-          })
+          // .then(res => {
+          //     window.localStorage.setItem('token', res.token)
+          //     push('/dashboard')
+            
+          // })
 
       .catch(err => {
         let errors = err.inner;
