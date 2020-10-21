@@ -5,7 +5,7 @@ const initialState = {
     admin: false,
     student: false,
     volunteer: false,
-    memberID: ''
+    userID: ''
 }
 
 export const registerReducer = (state = initialState, action) => {

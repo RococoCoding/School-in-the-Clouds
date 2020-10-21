@@ -3,12 +3,14 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import PrivateRoute from './components/PrivateRoute';
 import './App.css';
 
-import NavBar from "./components/NavBar";
-import Dashboard from "./components/Dashboard";
+import { NavBar } from "./components/NavBar";
 import ChangeTask from "./components/ChangeTask";
 import CreateTask from "./components/CreateTask";
-import Profile from "./components/Profile";
+import { Profile } from "./components/Profile";
 import { MainPage } from './components/MainPage';
+import {Admin} from './components/Admin';
+import {Student} from './components/Student';
+import {Volunteer} from './components/Volunteer';
 // import LoginForm from './components/LoginForm';
 // import RegisterForm from './components/RegisterForm';
 
@@ -18,18 +20,19 @@ function App() {
   return (
     <Router>
     <div className="App">
-      <header className="App-header">
-        <h1>School in the Cloud</h1>
+     
       <div className="navBar">
         <NavBar />
       </div>
-      </header>
+  
 
       <Switch>
-     <PrivateRoute path='/profile' component={Profile} />
-     <PrivateRoute path='/dashboard/change-task/:id' component={ChangeTask} />
-     <PrivateRoute path='/dashboard/create-task' component={CreateTask} />
-     <PrivateRoute path='/dashboard' component={Dashboard} />
+     <PrivateRoute exact path='/profile' component={Profile} />
+     <PrivateRoute exact path='/admin/change-task/:id' component={ChangeTask} />
+     <PrivateRoute exact path='/admin/create-task' component={CreateTask} />
+     <PrivateRoute exact path='/admin' component={Admin} />
+     <PrivateRoute exact path='/student' component={Student} />
+     <PrivateRoute exact path='/volunteer' component={Volunteer} />
      <Route exact path='/' component={MainPage} />
      
       </Switch>

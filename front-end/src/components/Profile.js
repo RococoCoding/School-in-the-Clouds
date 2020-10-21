@@ -4,7 +4,7 @@ import { axiosWithAuth } from "../store/utils/axiosWithAuth";
 import { setErrors } from '../store/actions/master';
 
 
-const Profile = () => {
+export const Profile = () => {
     const userID = useSelector(state => state.registerReducer.userID);
     const [user, setUser] = useState({});
     const dispatch = useDispatch();
@@ -33,4 +33,3 @@ const Profile = () => {
     )
 }
 
-export default Profile;

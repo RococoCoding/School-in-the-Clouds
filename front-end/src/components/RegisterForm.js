@@ -188,6 +188,7 @@ export default function RegisterStudent() {
         axios.post('https://cloudskool.herokuapp.com/api/auth/register', formValues)
         .then(res => {
             dispatch(toggleMain())
+            
         })
         .catch(err => {
             // console.dir(err)

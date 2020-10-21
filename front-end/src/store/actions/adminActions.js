@@ -33,8 +33,9 @@ export const setErrors = (err) => (dispatch) => {
 export const getTasks = () => (dispatch) => {
     dispatch({ type: GET_TASKS });
 
-    axiosWithAuth().get('api/todos')
+    axiosWithAuth().get('/todos')
     .then(res=> {
+      
         dispatch({ type: GET_TASKS_RES, payload: res.data })
     })
     .catch(err => {
@@ -45,7 +46,7 @@ export const getTasks = () => (dispatch) => {
 export const addTasks = (task) => (dispatch) => {
     dispatch({ type: GET_TASKS });
 
-    axiosWithAuth().post('api/todos', task)
+    axiosWithAuth().post('/todos', task)
     .then(res=> {
         console.log(res);
     })
@@ -56,7 +57,7 @@ export const addTasks = (task) => (dispatch) => {
 
 export const editTask = (id, task) => (dispatch) => {
 
-    axiosWithAuth().put(`api/todos/${id}`, task)
+    axiosWithAuth().put(`/todos/${id}`, task)
     .then(res=> {
         dispatch({ type: EDIT_TASK, payload: res.data })
     })
@@ -65,9 +66,10 @@ export const editTask = (id, task) => (dispatch) => {
     })
 }
 
+//somethign wrong here!!!!!!!! 
 export const deleteTask = (task) => (dispatch) => {
 
-    axiosWithAuth().delete(`api/todos/${task.id}`)
+    axiosWithAuth().delete(`/todos/${task.id}`)
     .then(res=> {
         dispatch({ type: DELETE_TASK, payload: res.data })
     })
@@ -78,7 +80,7 @@ export const deleteTask = (task) => (dispatch) => {
 
 export const deleteUser = (user) => (dispatch) => {
 
-    axiosWithAuth().delete(`api/user/${user.id}`)
+    axiosWithAuth().delete(`/user/${user.id}`)
     .then(res=> {
         dispatch(getVolunteers())
     })

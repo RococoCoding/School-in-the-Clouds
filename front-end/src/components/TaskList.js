@@ -10,6 +10,7 @@ export default function TaskList(props) {
 
   return (
     <div id={id} className="task-container">
+      
       <p className="due">{due}</p>
       <p className="task">{task}</p>
       <div className="edit-task">Edit</div>
