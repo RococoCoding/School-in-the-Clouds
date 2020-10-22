@@ -5,7 +5,6 @@ import { getVolunteers } from '../store/actions/userActions';
 
 const Student = props => {
    
-
     useEffect(() => {
         props.getVolunteers()
     }, []);
