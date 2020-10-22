@@ -1,40 +1,14 @@
-//First two blocks consist of exported actions from the other action files 
-
-export {
-    GET_TODOS,
-    GET_TODOS_RES,
-    GET_TODOS_ERR,
-    ADD_TODOS,
-    ADD_RES,
-    EDIT_TODO,
-    DELETE_TODO,
-    SET_USER_ID,
-    SET_EDITING,
-    LOADING_RES,
-    SET_ERRORS,
-    getTodos,
-    addTodos,
-    editTodo,
-    deleteTodo,
-    deleteUser,
-    setUserID,
-    setEditing,
-    loadingRes,
-    setErrors
-} from './adminActions'
-
-export {
-    GET_VOLUNTEERS,
-    GET_VOLUNTEERS_RES,
-    GET_VOLUNTEERS_ERR,
-    getAllUsers,
-    getVolunteers
-} from './studentActions'
-
+// export {
+//     GET_TODO_FAIL
+// }from "./todoActions"
 
 export const SET_ADMIN = 'SET_ADMIN';
 export const SET_STUDENT = 'SET_STUDENT';
 export const SET_VOLUNTEER = 'SET_VOLUNTEER';
+export const SET_ERRORS = 'SET_ERRORS';
+export const LOADING_RES = 'LOADING_RES';
+export const SET_USER_ID = 'SET_USER_ID';
+export const GET_TODO_FAIL = "GET_TODO_FAIL";
 
 export const TOGGLE_ADD = 'TOGGLE_ADD';
 export const TOGGLE_USER = 'TOGGLE_USER';
@@ -53,6 +27,18 @@ export const setStudent = () => (dispatch) => {
 
 export const setVolunteer = () => (dispatch) => {
     dispatch({ type: SET_VOLUNTEER })
+}
+
+export const setErrors = (err) => (dispatch) => {
+    dispatch({ type: GET_TODO_FAIL, payload: err.message })
+}
+
+export const loadingRes = () => (dispatch) => {
+    dispatch({ type: LOADING_RES })
+}
+
+export const setUserID = (res) => (dispatch) => {
+    dispatch({ type: SET_USER_ID, payload: res })
 }
 
 export const toggleAdd = () => (dispatch) => {

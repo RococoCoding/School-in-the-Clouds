@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useParams, useHistory } from 'react-router-dom';
 import { axiosWithAuth } from '../store/utils/axiosWithAuth';
-import { getTodos, editTodo, deleteTodo } from '../store/actions/master';
+import { getTodo, changeTodo, deleteTodo } from '../store/actions/todoActions';
 import TodoList from "./TodoList";
 
 const todoForm = {
@@ -19,7 +19,8 @@ const ChangeTodo = (todo) => {
     const { id } = useParams();
 
     useEffect(() => {
-        axiosWithAuth().get(`api/todos/${id}`)
+        axiosWithAuth()
+        .get(`api/todos/${id}`)
         .then(res => {
             setTodoEdit(res.data)
         })
@@ -35,14 +36,15 @@ const ChangeTodo = (todo) => {
 
     const handleSubmit = e => {
         e.preventDefault();
-        dispatch(editTodo(todoEdit));
-        dispatch(getTodos())
-        push('/dashboard');
+        dispatch(changeTodo(todoEdit));
+        dispatch(getTodo())
+        push('/admin');
     }
 
     return (
-        <div className="create-task-container">
+        <div className="change-task-container">
           <form onSubmit={handleSubmit}>
+
             <label htmlFor="title">Todo: </label>
             <textarea 
               name="todos"
@@ -51,6 +53,7 @@ const ChangeTodo = (todo) => {
               value={todo.title}
               onChange={handleChange}
             />
+
             <label htmlFor="description">Description: </label>
              <textarea 
               name="description"
@@ -59,9 +62,12 @@ const ChangeTodo = (todo) => {
               value={todo.description}
               onChange={handleChange}
             />
+
             {formErrors.todos && <p className="error">{formErrors.todos}</p>}
+
             <button type="change-button">Change Todo</button>
           </form>
+          
           {todoList.map((todo, idx) => {
             return (
               <TodoList 

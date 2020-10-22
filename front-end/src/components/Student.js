@@ -1,22 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { getVolunteers } from '../store/actions/master';
+import { getVolunteers } from '../store/actions/userActions';
 
-export const Student = () => {
+const Student = props => {
    
-    const [volunteers, setVolunteers] = useState();
-    const history = useHistory();
 
     useEffect(() => {
-        getVolunteers()
-    }, [getVolunteers]);
+        props.getVolunteers()
+    }, []);
+
+    const history = useHistory();
 
     return (
         <div className="header">
             <div className="all-volunteers">
+               <h2>Available Volunteers</h2>
                 {
-                    volunteers.map(volunteer => {
+                    props.volunteers.map(volunteer => {
                         return (
                             <div>
                                 <p>Username:{volunteer.username}</p>
@@ -29,9 +30,9 @@ export const Student = () => {
     )
 }
 
-function mapStateToProps(state) {
+const mapStateToProps = state => {
     return{
-        volunteers: state.studentReducer.volunteers
+        volunteers: state.userReducer.volunteers
     }
 }
-export default connect(mapStateToProps, {getVolunteers})(Student);
+export default connect(mapStateToProps, { getVolunteers })(Student);

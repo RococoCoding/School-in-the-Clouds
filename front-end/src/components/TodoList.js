@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch } from 'react-redux';
-import { deleteTodo } from '../store/actions/master';
+import { deleteTodo } from '../store/actions/todoActions';
 
 
 

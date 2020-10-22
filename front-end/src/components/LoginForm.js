@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import { useHistory } from 'react-router-dom';
-import { setAdmin, setStudent, setVolunteer, setUserID, loadingRes, toggleMain } from '../store/actions/master';
+import { setAdmin, setStudent, setVolunteer, setUserID, loadingRes } from '../store/actions/master';
 import { useDispatch } from "react-redux";
 import { axiosWithAuth } from '../store/utils/axiosWithAuth';
 import * as yup from "yup";
@@ -32,6 +32,7 @@ export default function LoginForm() {
   }
 
   function submit(e) {
+    
     const user = {
       username: formState.username.trim(),
       password: formState.password,
@@ -49,7 +50,7 @@ export default function LoginForm() {
      
           .then(res => {
             window.localStorage.setItem('token', res.data.token)
-            console.log(res.data)
+          //  console.log(res)
             if(res.data.role === 'admin'){
               //dispatch(setAdmin());
               history.push('/admin')
@@ -120,9 +121,9 @@ export default function LoginForm() {
                         onChange={updateForm}
                         >
                         <option value="">Pick a role</option>
-                        <option value="admin">admin</option>
-                        <option value="student">student</option>
-                        <option value="volunteer">volunteer</option>
+                        <option value="admin">Admin</option>
+                        <option value="student">Student</option>
+                        <option value="volunteer">Volunteer</option>
                         </select>
                 {formErrors.role && <p className="error">{formErrors.role}</p>}
 
@@ -130,9 +131,6 @@ export default function LoginForm() {
         
         <button type="submit">Submit</button>
 
-        <div className='select-submit'>
-        <p>Not yet a User? <span onClick={() => dispatch(toggleMain())}>Sign Up</span></p>
-        </div>
 
       </form>
     </div>

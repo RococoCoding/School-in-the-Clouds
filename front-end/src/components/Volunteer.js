@@ -1,30 +1,32 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { getTodos, deleteTodo } from '../store/actions/master';
+import { getTodo, deleteTodo } from "../store/actions/todoActions";
+// import { axiosWithAuth } from '../store/utils/axiosWithAuth';
 
-export const Volunteer =({getTodos, todos, deleteTodo}) => {
-
-   const history = useHistory();
-//    const { push } = useHistory();
+const Volunteer = props => {
 
     useEffect(() => {
-        getTodos()
-    }, [getTodos]);
+      props.getTodo()
+    }, []);
+
+    const history = useHistory();
+
+    console.log(props);
 
     return (
               <div>   
                  <div className="header">
-                 <h2>Tasks that need <em>your</em> help completing...</h2>
+                 <h2>Todos that need your attention...</h2>
                 </div>
                     <div className="todo-display">
                         {
-                            todos.map(todo => {
+                             props.todos.map(todo => {
                                 return (
                                     <div>
                                         <p>Title:{todo.title}</p>
                                         <p>Description:{todo.description}</p>
-                                        <button onClick={() =>deleteTodo(todo.id)}>Delete</button>
+                                        <button onClick={() =>props.deleteTodo(todo.id)}>Delete</button>
                                     </div>
                                 )
                             })
@@ -34,10 +36,10 @@ export const Volunteer =({getTodos, todos, deleteTodo}) => {
     )
 }
 
-function mapStateToProps(state) {
+const mapStateToProps = state => {
     return{
-        todos: state.adminReducer.todos
+        todos: state.todoReducer.todos
     }
 }
-export default connect(mapStateToProps, {getTodos, deleteTodo})(Volunteer);
+export default connect(mapStateToProps, { getTodo, deleteTodo })(Volunteer);
 
