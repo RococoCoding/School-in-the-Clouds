@@ -9,7 +9,7 @@ export const getAllUsers = () => (dispatch) => {
 
     axiosWithAuth().get('/users')
     .then(res => {
-        dispatch({ type: GET_VOLUNTEERS_RES, payload: res.data.data })
+        dispatch({ type: GET_VOLUNTEERS_RES, payload: res.data })
     })
     .catch(err => {
         dispatch({ type: GET_VOLUNTEERS_RES, payload: err.message})
@@ -19,9 +19,9 @@ export const getAllUsers = () => (dispatch) => {
 export const getVolunteers = () => (dispatch) => {
     dispatch({ type: GET_VOLUNTEERS })
 
-    axiosWithAuth().get('/users')
+    axiosWithAuth().get('/volunteers')
     .then(res => {
-        dispatch({ type: GET_VOLUNTEERS_RES, payload: res.data.volunteers })
+        dispatch({ type: GET_VOLUNTEERS_RES, payload: res.data })
     })
     .catch(err => {
         dispatch({ type: GET_VOLUNTEERS_ERR, payload: err })

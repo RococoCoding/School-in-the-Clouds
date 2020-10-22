@@ -1,8 +1,8 @@
 import React, {useState} from "react";
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { addTasks, getTasks, deleteTask } from '../store/actions/master';
-import TaskList from "./TaskList";
+import { addTodos, getTodos, deleteTodo } from '../store/actions/master';
+import TodoList from "./TodoList";
 import * as yup from "yup";
 
 const initialFormState = {
@@ -19,7 +19,7 @@ const formSchema = yup.object().shape({
 export default function CreateTask() {
   const [formState, setFormState] = useState(initialFormState);
   const [formErrors, setFormErrors] = useState({});
-  const [taskList, setTaskList] = useState([]);
+  const [todoList, setTodoList] = useState([]);
   const dispatch = useDispatch();
   const { push } = useHistory();
 
@@ -31,8 +31,8 @@ export default function CreateTask() {
   function submit(e) {
     e.preventDefault();
     formSchema.validate(formState, {abortEarly:false})
-    dispatch(addTasks(formState));
-    dispatch(getTasks())
+    dispatch(addTodos(formState));
+    dispatch(getTodos())
     push('/dashboard')
 
     // dispatch(deleteTask(id)) 
@@ -48,11 +48,11 @@ export default function CreateTask() {
   return (
     <div className="create-task-container">
       <form onSubmit={submit}>
-        <label htmlFor="title">Task: </label>
+        <label htmlFor="title">Todo: </label>
         <textarea 
           name="todos"
           type='text'
-          placeholder="Task Title"
+          placeholder="Todo Title"
           value={formState.title}
           onChange={updateForm}
         />
@@ -67,13 +67,13 @@ export default function CreateTask() {
         {formErrors.todos && <p className="error">{formErrors.todos}</p>}
         <button type="submit">Add Task</button>
       </form>
-      {taskList.map((task, idx) => {
+      {todoList.map((todo, idx) => {
         return (
-          <TaskList 
+          <TodoList 
             key={idx}
             id={idx}
-            task={task.todos}
-            deleteTask={deleteTask}      
+            todo={todo.todos}
+            deleteTodo={deleteTodo}      
           />
         )
       })}

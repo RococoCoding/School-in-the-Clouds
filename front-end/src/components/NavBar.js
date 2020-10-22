@@ -18,7 +18,7 @@ export const NavBar=()=> {
             ?
 
             <nav>
-                <button onClick={() => push('/dashboard')}>Dashboard</button>
+                {/* <button onClick={() => push('/dashboard')}>Dashboard</button> */}
                 <button onClick={() => push('/profile')}>Profile</button>
             </nav>
 

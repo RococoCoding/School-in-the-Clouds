@@ -4,13 +4,13 @@ import PrivateRoute from './components/PrivateRoute';
 import './App.css';
 
 import { NavBar } from "./components/NavBar";
-import ChangeTask from "./components/ChangeTask";
-import CreateTask from "./components/CreateTask";
+import ChangeTodo from "./components/ChangeTodo";
+import CreateTodo from "./components/CreateTodo";
 import { Profile } from "./components/Profile";
 import { MainPage } from './components/MainPage';
-import {Admin} from './components/Admin';
-import {Student} from './components/Student';
-import {Volunteer} from './components/Volunteer';
+import { Admin } from './components/Admin';
+import { Student } from './components/Student';
+import { Volunteer } from './components/Volunteer';
 // import LoginForm from './components/LoginForm';
 // import RegisterForm from './components/RegisterForm';
 
@@ -28,8 +28,8 @@ function App() {
 
       <Switch>
      <PrivateRoute exact path='/profile' component={Profile} />
-     <PrivateRoute exact path='/admin/change-task/:id' component={ChangeTask} />
-     <PrivateRoute exact path='/admin/create-task' component={CreateTask} />
+     <PrivateRoute exact path='/admin/change-todo/:id' component={ChangeTodo} />
+     <PrivateRoute exact path='/admin/create-todo' component={CreateTodo} />
      <PrivateRoute exact path='/admin' component={Admin} />
      <PrivateRoute exact path='/student' component={Student} />
      <PrivateRoute exact path='/volunteer' component={Volunteer} />

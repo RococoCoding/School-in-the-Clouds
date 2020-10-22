@@ -1,86 +1,57 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { getTasks, deleteTask, getAllUsers, deleteUser, toggleViewUser, toggleViewTasks } from '../store/actions/master';
+import { connect } from 'react-redux';
+import { getTodos, deleteTodo, getAllUsers, deleteUser, toggleViewUser, toggleViewTasks } from '../store/actions/master';
 
-export const Admin=() => {
-    const tasks = useSelector(state => state.adminReducer.todos);
-    const allUsers = useSelector(state => state.studentReducer.volunteers);
-    const userView = useSelector(state => state.adminReducer.userView);
-    const taskView = useSelector(state => state.adminReducer.taskView);
+export const Admin=({getTodos, todos, deleteTodo, getAllUsers, users, deleteUser, toggleViewTasks, toggleViewUser}) => {
 
-    const { push } = useHistory();
-    const dispatch = useDispatch();
+    const history = useHistory();
+    // const { push } = useHistory();
 
     useEffect(() => {
-        dispatch(getTasks())
-        dispatch(getAllUsers())
-    }, [])
+        getTodos()
+        getAllUsers()
+    }, [getTodos, getAllUsers]);
 
     return (
-        <>
-        <div className='controls'>
-            {
-                taskView 
-
-                ?
-                <div>
-                <button onClick={() => dispatch(toggleViewUser())}>Student Control</button>
-                <button onClick={() => push('/admin/create-task')}>Create Task</button>
-                </div>
-
-                :
-
-                <button onClick={() => dispatch(toggleViewTasks())}>
-                    Volunteer Control
-                </button>
-            }
-            </div>
-        
-        <div className='task-controls'>
-            {
-                taskView && tasks ? tasks.map(task => {
-                    return (
-                        <div className='tasks' key={task.id} >
-                            <h2>{task.title}</h2>
-                            <p>{task.description}</p>
-                            <button onClick={() => push(`/admin/change-task/${task.id}`)}>Change Task</button>
-                            <button onClick={() => dispatch(deleteTask(task))}>Delete Task</button>
+        <div className="header">
+            <div className="all-users">
+                {
+                    users.map(user => {
+                        return (
+                            <div>
+                                <p>Username:{user.username}</p>
+                                <p>Password:{user.password}</p>
+                                <p>Role:{user.role}</p>
+                                <button onClick={() =>deleteUser(user.id)}>Delete</button>   
                             </div>
-                    )
-                })
-
-                : 
-
-                null
-
-            }
-
-            {
-
-                userView && allUsers 
-
-                ?
-
-                allUsers.map(user => {
-                    return (
-                        <div className='user-control' key={user.id}>
-                            <h3>{user.username}</h3>
-                            <h3>{user.password}</h3>
-                            <h3>{user.email}</h3>
-
-                            <button onClick={() => dispatch(deleteUser(user))}>Delete User</button>
-                        </div>
-                    )
-                })
-
-                :
-
-                null
-
-    }
-    </div>  
-    </>
-    )  
+                        )
+                    })
+                }
+            <div className="all-todos">
+                {
+                    todos.map(todo => {
+                        return (
+                            <div>
+                                <p>Title:{todo.title}</p>
+                                <p>Description:{todo.description}</p>
+                                <button onClick={() => history.push('/create-todo')}>Create Todo</button>
+                                <button onClick={() => history.push('/change-todo')}>Change Todo</button>
+                                <button onClick={() =>deleteTodo(todo.id)}>Delete</button>
+                            </div>
+                        )
+                    })
+                }
+            </div>
+            </div>
+        </div>
+    )
 }
-      
+
+function mapStateToProps(state) {
+    return{
+        users: state.adminReducer.users,
+        todos: state.adminReducer.todos
+    }
+}
+export default connect(mapStateToProps, {getAllUsers, deleteUser, getTodos, deleteTodo })(Admin);

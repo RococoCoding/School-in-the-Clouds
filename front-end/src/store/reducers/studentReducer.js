@@ -1,4 +1,4 @@
-import { GET_TASKS, GET_TASKS_RES, GET_TASKS_ERR, GET_VOLUNTEERS, GET_VOLUNTEERS_RES, GET_VOLUNTEERS_ERR } from '../actions/master';
+import { GET_TODOS, GET_TODOS_RES, GET_TODOS_ERR, GET_VOLUNTEERS, GET_VOLUNTEERS_RES, GET_VOLUNTEERS_ERR } from '../actions/master';
 import { LOADING_RES } from '../actions/master';
 
 const initialState = {
@@ -11,20 +11,20 @@ const initialState = {
 
 export const studentReducer = (state = initialState, action) => {
     switch(action.type){
-        case GET_TASKS:
+        case GET_TODOS:
             return {
                 ...state,
                 isLoading: true,
                 error: ''
             };
-        case GET_TASKS_RES:
+        case GET_TODOS_RES:
             return {
                 ...state,
-                tasks: action.payload,
+                todos: action.payload,
                 isLoading: false,
                 error: ''
             };
-        case GET_TASKS_ERR:
+        case GET_TODOS_ERR:
             return {
                 ...state,
                 isLoading: false,

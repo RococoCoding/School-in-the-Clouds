@@ -4,10 +4,8 @@ import { registerReducer } from './registerReducer';
 import { studentReducer } from './studentReducer';
 
 
-const rootReducer = combineReducers({
+export const rootReducer = combineReducers({
     adminReducer,
     registerReducer,
     studentReducer
 });
-
-export default rootReducer;

@@ -1,21 +1,21 @@
 //First two blocks consist of exported actions from the other action files 
 
 export {
-    GET_TASKS,
-    GET_TASKS_RES,
-    GET_TASKS_ERR,
-    ADD_TASKS,
+    GET_TODOS,
+    GET_TODOS_RES,
+    GET_TODOS_ERR,
+    ADD_TODOS,
     ADD_RES,
-    EDIT_TASK,
-    DELETE_TASK,
+    EDIT_TODO,
+    DELETE_TODO,
     SET_USER_ID,
     SET_EDITING,
     LOADING_RES,
     SET_ERRORS,
-    getTasks,
-    addTasks,
-    editTask,
-    deleteTask,
+    getTodos,
+    addTodos,
+    editTodo,
+    deleteTodo,
     deleteUser,
     setUserID,
     setEditing,
@@ -38,10 +38,10 @@ export const SET_VOLUNTEER = 'SET_VOLUNTEER';
 
 export const TOGGLE_ADD = 'TOGGLE_ADD';
 export const TOGGLE_USER = 'TOGGLE_USER';
-export const TOGGLE_TASK = 'TOGGLE_TASK';
+export const TOGGLE_TODO = 'TOGGLE_TASK';
 export const TOGGLE_MAIN = 'TOGGLE_MAIN';
 export const TOGGLE_USER_VIEW = 'TOGGLE_USER_VIEW';
-export const TOGGLE_TASK_VIEW = 'TOGGLE_TASK_VIEW';
+export const TOGGLE_TODO_VIEW = 'TOGGLE_TASK_VIEW';
 
 export const setAdmin = () => (dispatch) => {
     dispatch({ type: SET_ADMIN })
@@ -63,8 +63,8 @@ export const toggleUser = () => (dispatch) => {
     dispatch({ type: TOGGLE_USER })
 }
 
-export const toggleTask = () => (dispatch) => {
-    dispatch({ type: TOGGLE_TASK })
+export const toggleTodo = () => (dispatch) => {
+    dispatch({ type: TOGGLE_TODO })
 }
 
 export const toggleMain = () => (dispatch) => {
@@ -75,6 +75,6 @@ export const toggleViewUser = () => (dispatch) => {
     dispatch({ type: TOGGLE_USER_VIEW })
 }
 
-export const toggleViewTasks = () => (dispatch) => {
+export const toggleViewTodos = () => (dispatch) => {
     dispatch({ type: TOGGLE_USER_VIEW })
 }

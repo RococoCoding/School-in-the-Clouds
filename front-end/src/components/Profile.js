@@ -1,33 +1,36 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { axiosWithAuth } from "../store/utils/axiosWithAuth";
+import { useDispatch } from 'react-redux';
 import { setErrors } from '../store/actions/master';
+import { axiosWithAuth } from "../store/utils/axiosWithAuth";
+import { useParams } from 'react-router-dom';
+// import { getAllUsers } from '../store/actions/master';
 
 
-export const Profile = () => {
-    const userID = useSelector(state => state.registerReducer.userID);
-    const [user, setUser] = useState({});
+export const Profile=() => {
+    
+    const [user, setUser] = useState();
     const dispatch = useDispatch();
+    const { id } = useParams();
+
     useEffect(() => {
         axiosWithAuth()
-        .get(`/users/id/${userID}`)
+        .get(`/users/id/${id}`)
         .then(res => {
-            setUser(res.data)
+            setUser(res.data);
         })
         .catch(err => {
-            // console.dir(err)
             dispatch(setErrors(err))
         })
-    }, [])
+    }, []);
 
     return (
     <div>
      <h1>Your Information:</h1>
      <div>
-        username: {user.username}<br/>
-        password: {user.password}<br/>
-        id: {user.id}<br/>
-        role: {user.role}<br/>
+        Id: {user.id}<br/>
+        Username: {user.username}<br/>
+        Password: {user.password}<br/>
+        Role: {user.role}<br/>
     </div>
     </div>
     )

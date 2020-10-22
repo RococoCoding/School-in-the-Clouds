@@ -2,18 +2,18 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useParams, useHistory } from 'react-router-dom';
 import { axiosWithAuth } from '../store/utils/axiosWithAuth';
-import { getTasks, editTask, deleteTask } from '../store/actions/master';
-import TaskList from "./TaskList";
+import { getTodos, editTodo, deleteTodo } from '../store/actions/master';
+import TodoList from "./TodoList";
 
-const taskForm = {
+const todoForm = {
     title: '',
     description: ''
 }
 
-const ChangeTask = (task) => {
-    const [taskEdit, setTaskEdit] = useState(taskForm);
+const ChangeTodo = (todo) => {
+    const [todoEdit, setTodoEdit] = useState(todoForm);
     const [formErrors, setFormErrors] = useState({});
-    const [taskList, setTaskList] = useState([]);
+    const [todoList, setTodoList] = useState([]);
     const dispatch = useDispatch();
     const { push } = useHistory();
     const { id } = useParams();
@@ -21,7 +21,7 @@ const ChangeTask = (task) => {
     useEffect(() => {
         axiosWithAuth().get(`api/todos/${id}`)
         .then(res => {
-            setTaskEdit(res.data)
+            setTodoEdit(res.data)
         })
         .catch(err => {
             console.log(err);
@@ -30,25 +30,25 @@ const ChangeTask = (task) => {
 
     const handleChange = e => {
         e.preventDefault();
-        setTaskEdit({ ...taskEdit, [e.target.name]: e.target.value })
+        setTodoEdit({ ...todoEdit, [e.target.name]: e.target.value })
     }
 
     const handleSubmit = e => {
         e.preventDefault();
-        dispatch(editTask(taskEdit));
-        dispatch(getTasks())
+        dispatch(editTodo(todoEdit));
+        dispatch(getTodos())
         push('/dashboard');
     }
 
     return (
         <div className="create-task-container">
           <form onSubmit={handleSubmit}>
-            <label htmlFor="title">Task: </label>
+            <label htmlFor="title">Todo: </label>
             <textarea 
               name="todos"
               type='text'
-              placeholder="Task Title"
-              value={task.title}
+              placeholder="Todo Title"
+              value={todo.title}
               onChange={handleChange}
             />
             <label htmlFor="description">Description: </label>
@@ -56,19 +56,19 @@ const ChangeTask = (task) => {
               name="description"
               type='text'
               placeholder="Enter description here."
-              value={task.description}
+              value={todo.description}
               onChange={handleChange}
             />
             {formErrors.todos && <p className="error">{formErrors.todos}</p>}
-            <button type="change-button">Change Task</button>
+            <button type="change-button">Change Todo</button>
           </form>
-          {taskList.map((task, idx) => {
+          {todoList.map((todo, idx) => {
             return (
-              <TaskList 
+              <TodoList 
                 key={idx}
                 id={idx}
-                task={task.todos}
-                deleteTask={deleteTask}      
+                todo={todo.todos}
+                deleteTodo={deleteTodo}      
               />
             )
           })}
@@ -76,5 +76,5 @@ const ChangeTask = (task) => {
       )
     }
 
-    export default ChangeTask;
+    export default ChangeTodo;
 
