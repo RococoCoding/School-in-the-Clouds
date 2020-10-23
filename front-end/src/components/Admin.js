@@ -48,10 +48,10 @@ const Admin = props => {
                 {
                     props.todos.map(todo => {
                         return (
-                            <div>
+                            <div className='todo-card' key={todo.id}>
                                 <p>Title:{todo.title}</p>
                                 <p>Description:{todo.description}</p>
-                                <button onClick={() => history.push('/change-todo')}>Change Todo</button>
+                                <button onClick={() => history.push(`/change-todo/${todo.id}`)}>Change Todo</button>
                                 <button onClick={() =>props.deleteTodo(todo.id)}>Delete</button>
                             </div>
                         )

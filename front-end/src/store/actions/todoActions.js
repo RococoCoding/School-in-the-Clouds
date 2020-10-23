@@ -39,12 +39,13 @@ export const CHANGE_TODO = "CHANGE_TODO";
 export const CHANGE_TODO_SUCCESS = "CHANGE_TODO_SUCCESS";
 export const CHANGE_TODO_FAIL = "CHANGE_TODO_FAIL";
 
-export const changeTodo = (id, todo) => dispatch => {
+export const changeTodo = (todo) => dispatch => {
+    // console.log(todo)
     dispatch({type: CHANGE_TODO})
     axiosWithAuth()
-        .put(`/todos/${id}`, todo)
+        .put(`/todos/${todo.id}`, todo)
         .then(res => {
-            // dispatch({type: CHANGE_TODO_SUCCESS, payload: res.data})
+            dispatch({type: CHANGE_TODO_SUCCESS, payload: res.data})
         })
         .catch(err => {
             dispatch({type: CHANGE_TODO_FAIL, payload: "An Error has occured"})

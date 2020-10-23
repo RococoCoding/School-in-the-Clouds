@@ -66,16 +66,11 @@ import {
                 loading:true,
             }
         case CHANGE_TODO_SUCCESS:
+            const updateTodo = state.todo.find(todo => todo.id === action.payload.id)
             return{
                 ...state,
-                todos: state.todos.map((todo) => {
-                    if(todo.todoid === action.payload.todoid){
-                        console.log(action.payload)
-                        return action.payload
-                    } else {
-                        return todo
-                    }
-                })
+                loading:false,
+                todos: [...state.todos, state.todos[updateTodo] = action.payload]
             }
         case CHANGE_TODO_FAIL:
             return{
