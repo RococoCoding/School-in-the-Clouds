@@ -10,7 +10,8 @@ import ListItemText from '@material-ui/core/ListItemText';
 const StyledNav = styled.nav`
     .menu-button {
         color: white;
-        padding: 20% 0;
+        padding: 10% 0;
+        margin-left:45%;
         &:hover {
             cursor: pointer;
             color: var(--aqua);
@@ -43,6 +44,7 @@ const StyledList = styled.div`
         &:hover {
             cursor:pointer;
         }
+        
     }
     `
 

@@ -6,7 +6,8 @@ import styled from "styled-components";
 const MainPageContainer = styled.section`
     height: 100vh;
     min-height: max-content;
-    .title {
+    padding-bottom: 10%;
+    h1,p {
         text-align: center;
         color: white;
         margin: 0;
@@ -17,14 +18,31 @@ const MainPageContainer = styled.section`
     }
     .form-container {
         min-width: max-content;
-        max-width: 60%; 
+        max-width: 100%; 
         margin: 0 auto;
         background-color: var(--darkpurple);
         color: white;
-        padding: 5%;
+        padding: 10%;
         border-radius: 8px;
     }
-    `
+    button {
+    background-color: var(--purple);
+    font-size: 1rem;
+    padding: 2% 4%;
+    border-radius: 3px;
+    color: white;
+    font-weight: bolder;
+    &:hover {
+      color: var(--aqua);
+    }
+   
+}
+    .login{
+        margin-left:45%;
+       
+    }
+
+`
 
 
 export const MainPage = () => {
@@ -41,7 +59,7 @@ export const MainPage = () => {
             }
 
                  <p>Already a User?</p>
-                 <button onClick={() => push('/login')}>Login</button>
+                 <button className="login" onClick={() => push('/login')}>Login</button>
 
             </div>
         </MainPageContainer>
