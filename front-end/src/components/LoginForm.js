@@ -72,12 +72,7 @@ export default function LoginForm() {
       })
       
     })
-    
-          // .then(res => {
-          //     window.localStorage.setItem('token', res.token)
-          //     push('/dashboard')
-            
-          // })
+       
 
       .catch(err => {
         let errors = err.inner;
@@ -114,7 +109,7 @@ export default function LoginForm() {
         {formErrors.password && <p className="error">{formErrors.password}</p>}
 
 
-        {/* <label htmlFor="role">Role: </label>
+        <label htmlFor="role">Role: </label>
                         <select
                         type="dropdown"
                         name="role"
@@ -124,7 +119,7 @@ export default function LoginForm() {
                         <option value="admin">Admin</option>
                         <option value="student">Student</option>
                         <option value="volunteer">Volunteer</option>
-                        </select> */}
+                        </select>
 
                 {formErrors.role && <p className="error">{formErrors.role}</p>}
 

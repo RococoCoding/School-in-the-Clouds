@@ -10,7 +10,7 @@ const todoForm = {
     description: ''
 }
 
-const ChangeTodo = (props) => {
+function ChangeTodo(props) {
     const [todoEdit, setTodoEdit] = useState(todoForm);
     const [formErrors, setFormErrors] = useState({});
     const [todoList, setTodoList] = useState([]);
