@@ -1,8 +1,8 @@
 import React, {useState} from "react";
 import { useHistory } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { addTasks, getTasks, deleteTask } from '../store/actions/master';
-import TaskList from "./TaskList";
+import { useDispatch, connect } from 'react-redux';
+import { addTodo, getTodo } from '../store/actions/todoActions';
+import TodoList from "./TodoList";
 import * as yup from "yup";
 
 const initialFormState = {
@@ -13,46 +13,47 @@ const initialFormState = {
 const formSchema = yup.object().shape({
   todos: yup
     .string()
-    .min(1, "You must enter a task description.")
+    .min(1, "You must enter a todo description.")
 })
 
-export default function CreateTask() {
+function CreateTodo(props) {
   const [formState, setFormState] = useState(initialFormState);
   const [formErrors, setFormErrors] = useState({});
-  const [taskList, setTaskList] = useState([]);
+  const [todoList, setTodoList] = useState([]);
   const dispatch = useDispatch();
   const { push } = useHistory();
-
+  const history = useHistory();
+  const { getTodo, addTodo } = props;
 
   function updateForm(e) {
-    setFormState({...formState, [e.target.name]: e.target.value});
+    setFormState({
+      ...formState, 
+      [e.target.name]: e.target.value});
   }
 
   function submit(e) {
-    e.preventDefault();
-    formSchema.validate(formState, {abortEarly:false})
-    dispatch(addTasks(formState));
-    dispatch(getTasks())
-    push('/dashboard')
 
-    // dispatch(deleteTask(id)) 
-    //   let newList = [...taskList];
-    //   // console.log(key)
-    //   newList.splice(id, 1);
-    //   setTaskList(newList);
+    const newTodo = {
+      title: formState.title.trim(),
+      description: formState.description.trim(),
+    }
+
+    e.preventDefault();
+    // formSchema.validate(formState, {abortEarly:false})
+    addTodo(formState);
+    getTodo(newTodo);
+    history.push('/admin')
    
   }
-
-
 
   return (
     <div className="create-task-container">
       <form onSubmit={submit}>
-        <label htmlFor="title">Task: </label>
+        <label htmlFor="title">Todo: </label>
         <textarea 
-          name="todos"
+          name="title"
           type='text'
-          placeholder="Task Title"
+          placeholder="Todo Title"
           value={formState.title}
           onChange={updateForm}
         />
@@ -65,18 +66,19 @@ export default function CreateTask() {
           onChange={updateForm}
         />
         {formErrors.todos && <p className="error">{formErrors.todos}</p>}
-        <button type="submit">Add Task</button>
+        <button type="submit">Add Todo</button>
       </form>
-      {taskList.map((task, idx) => {
-        return (
-          <TaskList 
-            key={idx}
-            id={idx}
-            task={task.todos}
-            deleteTask={deleteTask}      
-          />
-        )
-      })}
+      {
+          <TodoList />
+
+      }
     </div>
   )
 }
+
+function mapStateToProps(state) {
+  return {
+    todos: state.todoReducer.todos
+  }
+};
+export default connect(mapStateToProps, { addTodo, getTodo })(CreateTodo);

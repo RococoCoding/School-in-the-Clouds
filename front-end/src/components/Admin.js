@@ -1,86 +1,72 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { getTasks, deleteTask, getAllUsers, deleteUser, toggleViewUser, toggleViewTasks } from '../store/actions/master';
+import { connect } from 'react-redux';
+import { getUsers, deleteUser } from '../store/actions/userActions';
+import { getTodo, deleteTodo } from '../store/actions/todoActions';
 
-export const Admin=() => {
-    const tasks = useSelector(state => state.adminReducer.todos);
-    const allUsers = useSelector(state => state.studentReducer.volunteers);
-    const userView = useSelector(state => state.adminReducer.userView);
-    const taskView = useSelector(state => state.adminReducer.taskView);
-
-    const { push } = useHistory();
-    const dispatch = useDispatch();
+const Admin = props => {
 
     useEffect(() => {
-        dispatch(getTasks())
-        dispatch(getAllUsers())
-    }, [])
+        props.getUsers()
+        props.getTodo()
+    }, []);
+
+    const history = useHistory();
+    const [show, setShow] = useState(false);
+
+    console.log(props.todos);
 
     return (
-        <>
-        <div className='controls'>
-            {
-                taskView 
-
-                ?
-                <div>
-                <button onClick={() => dispatch(toggleViewUser())}>Student Control</button>
-                <button onClick={() => push('/admin/create-task')}>Create Task</button>
-                </div>
-
-                :
-
-                <button onClick={() => dispatch(toggleViewTasks())}>
-                    Volunteer Control
-                </button>
-            }
-            </div>
-        
-        <div className='task-controls'>
-            {
-                taskView && tasks ? tasks.map(task => {
-                    return (
-                        <div className='tasks' key={task.id} >
-                            <h2>{task.title}</h2>
-                            <p>{task.description}</p>
-                            <button onClick={() => push(`/admin/change-task/${task.id}`)}>Change Task</button>
-                            <button onClick={() => dispatch(deleteTask(task))}>Delete Task</button>
+        <div className="header">
+            <div className="all-users">
+            <h2>All Users You Can Control</h2>
+            <div className='showAndHide'>
+                <div onClick={() => setShow(!show)}>
+                    { !show ? (
+                        <div  className='showAndHide'>Show User Users</div>
+                    ) : (
+                        <div>
+                <div className='showAndHide'>Close User Details</div>
+                {
+                    props.users.map(user => {
+                        return (
+                            <div>
+                                <p>Username:{user.username}</p>
+                                <p>Password:{user.password}</p>
+                                <p>Role:{user.role}</p>
+                                <button onClick={() =>props.deleteUser(user.id)}>Delete</button>   
                             </div>
-                    )
-                })
-
-                : 
-
-                null
-
-            }
-
-            {
-
-                userView && allUsers 
-
-                ?
-
-                allUsers.map(user => {
-                    return (
-                        <div className='user-control' key={user.id}>
-                            <h3>{user.username}</h3>
-                            <h3>{user.password}</h3>
-                            <h3>{user.email}</h3>
-
-                            <button onClick={() => dispatch(deleteUser(user))}>Delete User</button>
-                        </div>
-                    )
-                })
-
-                :
-
-                null
-
-    }
-    </div>  
-    </>
-    )  
+                        )
+                    })
+                }
+                </div>
+                    )}
+                </div>
+            <div className="all-todos">
+            <h2>All Todos</h2>
+            <button onClick={() => history.push('/create-todo')}>Create Todo</button>
+                {
+                    props.todos.map(todo => {
+                        return (
+                            <div>
+                                <p>Title:{todo.title}</p>
+                                <p>Description:{todo.description}</p>
+                                <button onClick={() => history.push('/change-todo')}>Change Todo</button>
+                                <button onClick={() =>props.deleteTodo(todo.id)}>Delete</button>
+                            </div>
+                        )
+                    })
+                }
+            </div>
+            </div>
+        </div>
+        </div>
+    )
 }
-      
+const mapStateToProps = state => {
+    return{
+        users: state.userReducer.users,
+        todos: state.todoReducer.todos
+    }
+}
+export default connect(mapStateToProps, { getUsers, deleteUser, getTodo, deleteTodo })(Admin);

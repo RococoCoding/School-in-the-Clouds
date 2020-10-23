@@ -1,36 +1,45 @@
-import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { getTasks } from '../store/actions/master';
+import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { getTodo, deleteTodo } from "../store/actions/todoActions";
+// import { axiosWithAuth } from '../store/utils/axiosWithAuth';
 
-export const Volunteer = () => {
-    const tasks = useSelector(state => state.studentReducer.todos);
-    //const loading = useSelector(state => state.sReducer.isLoading);
-    const dispatch = useDispatch()
+const Volunteer = props => {
 
     useEffect(() => {
-        dispatch(getTasks())
-    }, [])
+      props.getTodo()
+    }, []);
+
+    const history = useHistory();
+
+    console.log(props);
 
     return (
               <div>   
-                 <div className='top'>
-                 <h2>Tasks that need <em>your</em> help completing...</h2>
+                 <div className="header">
+                 <h2>Todos that need your attention...</h2>
                 </div>
-                    <div className='bot'>
-                    {tasks.map(todos => {
-                        return (
-                            <ul>
-                            <div className='tasks' key={todos.id} >
-                                {/* <h2>Task Title:</h2> */}
-                                <h3 className='upp'>{todos.title}</h3>
-                                {/* <h4>Task Descirption:</h4> */}
-                                <p>{todos.description}</p>
-                            </div>
-                            </ul>
-                        );
-                    })}
+                    <div className="todo-display">
+                        {
+                             props.todos.map(todo => {
+                                return (
+                                    <div>
+                                        <p>Title:{todo.title}</p>
+                                        <p>Description:{todo.description}</p>
+                                        <button onClick={() =>props.deleteTodo(todo.id)}>Delete</button>
+                                    </div>
+                                )
+                            })
+                        }
             </div>
         </div>
     )
 }
+
+const mapStateToProps = state => {
+    return{
+        todos: state.todoReducer.todos
+    }
+}
+export default connect(mapStateToProps, { getTodo, deleteTodo })(Volunteer);
 

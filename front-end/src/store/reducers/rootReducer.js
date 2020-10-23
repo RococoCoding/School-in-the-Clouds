@@ -1,13 +1,9 @@
 import { combineReducers } from 'redux';
-import { adminReducer } from './adminReducer';
-import { registerReducer } from './registerReducer';
-import { studentReducer } from './studentReducer';
+import { todoReducer } from './todoReducer';
+import { userReducer } from './userReducer';
 
 
-const rootReducer = combineReducers({
-    adminReducer,
-    registerReducer,
-    studentReducer
+export const rootReducer = combineReducers({
+    todoReducer,
+    userReducer
 });
-
-export default rootReducer;

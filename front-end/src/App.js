@@ -4,15 +4,16 @@ import PrivateRoute from './components/PrivateRoute';
 import './App.css';
 
 import { NavBar } from "./components/NavBar";
-import ChangeTask from "./components/ChangeTask";
-import CreateTask from "./components/CreateTask";
+import ChangeTodo from "./components/ChangeTodo";
+import CreateTodo from "./components/CreateTodo";
 import { Profile } from "./components/Profile";
 import { MainPage } from './components/MainPage';
-import {Admin} from './components/Admin';
-import {Student} from './components/Student';
-import {Volunteer} from './components/Volunteer';
-// import LoginForm from './components/LoginForm';
-// import RegisterForm from './components/RegisterForm';
+import Admin from './components/Admin';
+import Student from './components/Student';
+import Volunteer  from './components/Volunteer';
+import LoginForm from './components/LoginForm';
+import TodoList from './components/TodoList';
+
 
 
 function App() {
@@ -28,11 +29,13 @@ function App() {
 
       <Switch>
      <PrivateRoute exact path='/profile' component={Profile} />
-     <PrivateRoute exact path='/admin/change-task/:id' component={ChangeTask} />
-     <PrivateRoute exact path='/admin/create-task' component={CreateTask} />
+     <PrivateRoute exact path='/change-todo' component={ChangeTodo} />
+     <PrivateRoute exact path='/todo-list' component={TodoList} />
+     <PrivateRoute exact path='/create-todo' component={CreateTodo} />
      <PrivateRoute exact path='/admin' component={Admin} />
      <PrivateRoute exact path='/student' component={Student} />
      <PrivateRoute exact path='/volunteer' component={Volunteer} />
+     <Route exact path='/login' component={LoginForm} />
      <Route exact path='/' component={MainPage} />
      
       </Switch>
