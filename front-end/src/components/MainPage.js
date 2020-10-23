@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import RegisterForm from './RegisterForm';
 import LoginForm from './LoginForm';
 import { useHistory } from 'react-router-dom';
+import TodoList from './TodoList';
 
 
 
@@ -17,7 +18,7 @@ export const MainPage = () => {
             <h1>Welcome to School in the Cloud!</h1>
             <div>
             {
-                 <RegisterForm />  
+                 <RegisterForm /> 
             }
 
                  <p>Already a User?</p>

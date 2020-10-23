@@ -12,6 +12,7 @@ import Admin from './components/Admin';
 import Student from './components/Student';
 import Volunteer  from './components/Volunteer';
 import LoginForm from './components/LoginForm';
+import TodoList from './components/TodoList';
 
 
 
@@ -28,8 +29,9 @@ function App() {
 
       <Switch>
      <PrivateRoute exact path='/profile' component={Profile} />
-     <PrivateRoute exact path='/admin/change-todo/:id' component={ChangeTodo} />
-     <PrivateRoute exact path='/admin/create-todo' component={CreateTodo} />
+     <PrivateRoute exact path='/change-todo' component={ChangeTodo} />
+     <PrivateRoute exact path='/todo-list' component={TodoList} />
+     <PrivateRoute exact path='/create-todo' component={CreateTodo} />
      <PrivateRoute exact path='/admin' component={Admin} />
      <PrivateRoute exact path='/student' component={Student} />
      <PrivateRoute exact path='/volunteer' component={Volunteer} />

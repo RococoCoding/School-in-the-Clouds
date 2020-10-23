@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, connect } from 'react-redux';
 import { useParams, useHistory } from 'react-router-dom';
 import { axiosWithAuth } from '../store/utils/axiosWithAuth';
 import { getTodo, changeTodo, deleteTodo } from '../store/actions/todoActions';
@@ -10,35 +10,38 @@ const todoForm = {
     description: ''
 }
 
-const ChangeTodo = (todo) => {
+const ChangeTodo = (props) => {
     const [todoEdit, setTodoEdit] = useState(todoForm);
     const [formErrors, setFormErrors] = useState({});
     const [todoList, setTodoList] = useState([]);
     const dispatch = useDispatch();
     const { push } = useHistory();
     const { id } = useParams();
+    const { changeTodo } = props;
+    const history = useHistory();
 
     useEffect(() => {
         axiosWithAuth()
-        .get(`api/todos/${id}`)
+        .get(`/todos/${id}`)
         .then(res => {
-            setTodoEdit(res.data)
+            setTodoEdit({title: res.data.title, description: res.data.description})
         })
         .catch(err => {
             console.log(err);
         })
-    }, [])
+    }, [id])
 
     const handleChange = e => {
         e.preventDefault();
-        setTodoEdit({ ...todoEdit, [e.target.name]: e.target.value })
+        setTodoEdit({ ...todoEdit, 
+          [e.target.name]: e.target.value })
     }
 
     const handleSubmit = e => {
         e.preventDefault();
-        dispatch(changeTodo(todoEdit));
-        dispatch(getTodo())
-        push('/admin');
+        changeTodo(id, todoEdit);
+        // dispatch(getTodo())
+        history.push('/admin');
     }
 
     return (
@@ -50,7 +53,7 @@ const ChangeTodo = (todo) => {
               name="todos"
               type='text'
               placeholder="Todo Title"
-              value={todo.title}
+              value={todoEdit.title}
               onChange={handleChange}
             />
 
@@ -59,7 +62,7 @@ const ChangeTodo = (todo) => {
               name="description"
               type='text'
               placeholder="Enter description here."
-              value={todo.description}
+              value={todoEdit.description}
               onChange={handleChange}
             />
 
@@ -68,19 +71,17 @@ const ChangeTodo = (todo) => {
             <button type="change-button">Change Todo</button>
           </form>
           
-          {todoList.map((todo, idx) => {
-            return (
-              <TodoList 
-                key={idx}
-                id={idx}
-                todo={todo.todos}
-                deleteTodo={deleteTodo}      
-              />
-            )
-          })}
+          {
+              <TodoList />
+          }
         </div>
       )
     }
 
-    export default ChangeTodo;
+    const mapStateToProps = state => {
+      return{
+          todos: state.todoReducer.todos
+      }
+  }
+  export default connect(mapStateToProps, { getTodo, changeTodo })(ChangeTodo);
 

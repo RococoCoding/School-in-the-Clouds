@@ -15,7 +15,7 @@ export default function LoginForm() {
   const [formState, setFormState] = useState(initialFormState);
   const [formErrors, setFormErrors] = useState({});
   const dispatch = useDispatch();
-  const { push } = useHistory();
+  // const { push } = useHistory();
   const history = useHistory();
 
   const formSchema = yup.object().shape({
@@ -114,7 +114,7 @@ export default function LoginForm() {
         {formErrors.password && <p className="error">{formErrors.password}</p>}
 
 
-        <label htmlFor="role">Role: </label>
+        {/* <label htmlFor="role">Role: </label>
                         <select
                         type="dropdown"
                         name="role"
@@ -124,7 +124,8 @@ export default function LoginForm() {
                         <option value="admin">Admin</option>
                         <option value="student">Student</option>
                         <option value="volunteer">Volunteer</option>
-                        </select>
+                        </select> */}
+
                 {formErrors.role && <p className="error">{formErrors.role}</p>}
 
 

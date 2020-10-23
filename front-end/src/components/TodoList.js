@@ -1,20 +1,36 @@
-import React from "react";
-import { useDispatch } from 'react-redux';
-import { deleteTodo } from '../store/actions/todoActions';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import { getTodo } from '../store/actions/todoActions';
 
+const TodoList = props => {
 
+  useEffect(() => {
+    props.getTodo()
+  }, []);
 
-export default function TodoList(props) {
-  const {due, todo, id } = props;
-  const dispatch = useDispatch();
+  const history = useHistory();
 
   return (
-    <div id={id} className="task-container">
-      
-      <p className="due">{due}</p>
-      <p className="task">{todo}</p>
-      <div className="edit-task">Edit</div>
-      <div onClick={()=>dispatch(deleteTodo(id))} className="delete-todo">Delete</div>
+    <div className="todo-list">
+      <h2>Updated Todo List:</h2>
+      {
+        props.todos.map(todo => {
+          return (
+            <div>
+                <p>Title:{todo.title}</p>
+                <p>Description:{todo.description}</p>
+            </div>
+        )})
+      }
+    
     </div>
   )
 }
+
+const mapStateToProps = state => {
+  return{
+    todos: state.todoReducer.todos
+  }
+}
+export default connect(mapStateToProps, { getTodo })(TodoList);

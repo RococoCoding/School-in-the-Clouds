@@ -68,16 +68,17 @@ export default function RegisterStudent() {
 
     const submit = (formValues) => {
       
-        const newStudent = {
-            username: formValues.username.trim(),
-            password: formValues.password,
-            role: formValues.role
+    const newStudent = {
+        username: formValues.username.trim(),
+        password: formValues.password,
+        role: formValues.role
         }
        
-        axios
+    axios 
         .post('https://cloudskool.herokuapp.com/api/auth/register', formValues)
         .then(res => {
             dispatch(toggleMain())
+            history.push('/login')
         })
         .catch(err => {
             dispatch(setErrors(err))

@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import { useHistory } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, connect } from 'react-redux';
 import { addTodo, getTodo, deleteTodo } from '../store/actions/todoActions';
 import TodoList from "./TodoList";
 import * as yup from "yup";
@@ -16,28 +16,35 @@ const formSchema = yup.object().shape({
     .min(1, "You must enter a todo description.")
 })
 
-export default function CreateTodo() {
+function CreateTodo(props) {
   const [formState, setFormState] = useState(initialFormState);
   const [formErrors, setFormErrors] = useState({});
   const [todoList, setTodoList] = useState([]);
   const dispatch = useDispatch();
   const { push } = useHistory();
-
+  const history = useHistory();
+  const { getTodo } = props;
 
   function updateForm(e) {
-    setFormState({...formState, [e.target.name]: e.target.value});
+    setFormState({
+      ...formState, 
+      [e.target.name]: e.target.value});
   }
 
   function submit(e) {
+
+    const newTodo = {
+      title: formState.title.trim(),
+      description: formState.description.trim(),
+    }
+
     e.preventDefault();
-    formSchema.validate(formState, {abortEarly:false})
+    // formSchema.validate(formState, {abortEarly:false})
     dispatch(addTodo(formState));
-    dispatch(getTodo())
-    push('/admin')
+    dispatch(getTodo(newTodo))
+    history.push('/admin')
    
   }
-
-
 
   return (
     <div className="create-task-container">
@@ -61,18 +68,17 @@ export default function CreateTodo() {
         {formErrors.todos && <p className="error">{formErrors.todos}</p>}
         <button type="submit">Add Todo</button>
       </form>
+      {
+          <TodoList />
 
-      {todoList.map((todo, idx) => {
-
-        return (
-          <TodoList 
-            key={idx}
-            id={idx}
-            todo={todo.todos}
-            deleteTodo={deleteTodo}      
-          />
-        )
-      })}
+      }
     </div>
   )
 }
+
+function mapStateToProps(state) {
+  return {
+    todos: state.todoReducer.todos
+  }
+};
+export default connect(mapStateToProps, { getTodo })(CreateTodo);
