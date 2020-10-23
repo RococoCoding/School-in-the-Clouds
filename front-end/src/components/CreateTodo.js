@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import { useHistory } from 'react-router-dom';
 import { useDispatch, connect } from 'react-redux';
-import { addTodo, getTodo, deleteTodo } from '../store/actions/todoActions';
+import { addTodo, getTodo } from '../store/actions/todoActions';
 import TodoList from "./TodoList";
 import * as yup from "yup";
 
@@ -23,7 +23,7 @@ function CreateTodo(props) {
   const dispatch = useDispatch();
   const { push } = useHistory();
   const history = useHistory();
-  const { getTodo } = props;
+  const { getTodo, addTodo } = props;
 
   function updateForm(e) {
     setFormState({
@@ -40,8 +40,8 @@ function CreateTodo(props) {
 
     e.preventDefault();
     // formSchema.validate(formState, {abortEarly:false})
-    dispatch(addTodo(formState));
-    dispatch(getTodo(newTodo))
+    addTodo(formState);
+    getTodo(newTodo);
     history.push('/admin')
    
   }
@@ -51,7 +51,7 @@ function CreateTodo(props) {
       <form onSubmit={submit}>
         <label htmlFor="title">Todo: </label>
         <textarea 
-          name="todos"
+          name="title"
           type='text'
           placeholder="Todo Title"
           value={formState.title}
@@ -81,4 +81,4 @@ function mapStateToProps(state) {
     todos: state.todoReducer.todos
   }
 };
-export default connect(mapStateToProps, { getTodo })(CreateTodo);
+export default connect(mapStateToProps, { addTodo, getTodo })(CreateTodo);

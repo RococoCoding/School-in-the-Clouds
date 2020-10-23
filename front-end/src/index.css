@@ -1,4 +1,5 @@
 :root {
+  --grey: #2B343D;
   --darkgrey: #242B33;
   --aqua: #21B2A6;
   --purple: #505393;
@@ -8,6 +9,7 @@ body {
   font-family: 'Open Sans', Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: var(--grey);
 
 }
 

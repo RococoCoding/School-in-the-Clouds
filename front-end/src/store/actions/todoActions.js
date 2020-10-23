@@ -39,12 +39,12 @@ export const CHANGE_TODO = "CHANGE_TODO";
 export const CHANGE_TODO_SUCCESS = "CHANGE_TODO_SUCCESS";
 export const CHANGE_TODO_FAIL = "CHANGE_TODO_FAIL";
 
-export const changeTodo = (id, todos) => dispatch => {
-    // dispatch({type: CHANGE_TODO})
+export const changeTodo = (id, todo) => dispatch => {
+    dispatch({type: CHANGE_TODO})
     axiosWithAuth()
-        .put(`/todos/${todos.id}`, todos)
+        .put(`/todos/${id}`, todo)
         .then(res => {
-            dispatch({type: CHANGE_TODO_SUCCESS, payload: res.data})
+            // dispatch({type: CHANGE_TODO_SUCCESS, payload: res.data})
         })
         .catch(err => {
             dispatch({type: CHANGE_TODO_FAIL, payload: "An Error has occured"})
@@ -55,13 +55,16 @@ export const ADD_TODO = "ADD_TODO";
 export const ADD_TODO_SUCCESS = "ADD_TODO_SUCCESS";
 export const ADD_TODO_FAIL = "ADD_TODO_FAIL";
 
-export const addTodo = (todos) => (dispatch) => {
+export const addTodo = (todo) => (dispatch) => {
         dispatch({ type: ADD_TODO });
-    
+        // console.log(todos)
+
         axiosWithAuth()
-        .post('/todos', todos)
+        .post('/todos', todo)
         .then(res=> {
-            dispatch({type: ADD_TODO_SUCCESS, payload:todos})
+            // dispatch({type: ADD_TODO_SUCCESS, payload:todo})
+            console.log(res.data);
+            
         })
         .catch(err => {
             dispatch({type: ADD_TODO_FAIL, payload: "An Error has occured"})

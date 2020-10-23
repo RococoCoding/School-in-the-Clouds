@@ -93,7 +93,6 @@ import {
                 ...state, 
                 loading: false, 
                 error:'',
-                todos: action.payload
             }
         case ADD_TODO_FAIL:
             return{

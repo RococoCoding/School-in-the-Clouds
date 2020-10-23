@@ -5,9 +5,9 @@ import { getTodo } from '../store/actions/todoActions';
 
 const TodoList = props => {
 
-  useEffect(() => {
-    props.getTodo()
-  }, []);
+  // useEffect(() => {
+  //   props.getTodo()
+  // }, []);
 
   const history = useHistory();
 

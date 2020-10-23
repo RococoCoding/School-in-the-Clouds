@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, connect } from 'react-redux';
 import { useParams, useHistory } from 'react-router-dom';
 import { axiosWithAuth } from '../store/utils/axiosWithAuth';
-import { getTodo, changeTodo, deleteTodo } from '../store/actions/todoActions';
+import { getTodo, changeTodo } from '../store/actions/todoActions';
 import TodoList from "./TodoList";
 
 const todoForm = {
@@ -17,19 +17,23 @@ function ChangeTodo(props) {
     const dispatch = useDispatch();
     const { push } = useHistory();
     const { id } = useParams();
-    const { changeTodo } = props;
+    const { getTodo, changeTodo } = props;
     const history = useHistory();
 
+    // useEffect(() => {
+    //     axiosWithAuth()
+    //     .get(`/todos/${id}`)
+    //     .then(res => {
+    //         setTodoEdit(res.data)
+    //     })
+    //     .catch(err => {
+    //         console.log(err);
+    //     })
+    // }, [id])
+
     useEffect(() => {
-        axiosWithAuth()
-        .get(`/todos/${id}`)
-        .then(res => {
-            setTodoEdit({title: res.data.title, description: res.data.description})
-        })
-        .catch(err => {
-            console.log(err);
-        })
-    }, [id])
+      props.getTodo(id)
+  }, [id]);
 
     const handleChange = e => {
         e.preventDefault();
@@ -40,7 +44,7 @@ function ChangeTodo(props) {
     const handleSubmit = e => {
         e.preventDefault();
         changeTodo(id, todoEdit);
-        // dispatch(getTodo())
+        getTodo(todoEdit);
         history.push('/admin');
     }
 
@@ -50,7 +54,7 @@ function ChangeTodo(props) {
 
             <label htmlFor="title">Todo: </label>
             <textarea 
-              name="todos"
+              name="title"
               type='text'
               placeholder="Todo Title"
               value={todoEdit.title}

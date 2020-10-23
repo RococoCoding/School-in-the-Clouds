@@ -1,11 +1,30 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import RegisterForm from './RegisterForm';
-import LoginForm from './LoginForm';
 import { useHistory } from 'react-router-dom';
-import TodoList from './TodoList';
+import styled from "styled-components";
 
-
+const MainPageContainer = styled.section`
+    height: 100vh;
+    min-height: max-content;
+    .title {
+        text-align: center;
+        color: white;
+        margin: 0;
+        padding: 5% 0;
+        font-size: 2rem;
+        text-transform: uppercase;
+        letter-spacing: 0.3rem;
+    }
+    .form-container {
+        min-width: max-content;
+        max-width: 60%; 
+        margin: 0 auto;
+        background-color: var(--darkpurple);
+        color: white;
+        padding: 5%;
+        border-radius: 8px;
+    }
+    `
 
 
 export const MainPage = () => {
@@ -14,7 +33,7 @@ export const MainPage = () => {
     const { push } = useHistory();
 
     return (
-        <section>
+        <MainPageContainer>
             <h1>Welcome to School in the Cloud!</h1>
             <div>
             {
@@ -25,6 +44,6 @@ export const MainPage = () => {
                  <button onClick={() => push('/login')}>Login</button>
 
             </div>
-        </section>
+        </MainPageContainer>
     )
 }

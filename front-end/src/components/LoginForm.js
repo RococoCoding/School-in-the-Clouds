@@ -1,9 +1,45 @@
 import React, {useState} from "react";
 import { useHistory } from 'react-router-dom';
-import { setAdmin, setStudent, setVolunteer, setUserID, loadingRes } from '../store/actions/master';
+import { setUserID, loadingRes } from '../store/actions/master';
 import { useDispatch } from "react-redux";
 import { axiosWithAuth } from '../store/utils/axiosWithAuth';
 import * as yup from "yup";
+import styled from "styled-components";
+
+const LoginPageContainer = styled.div`
+  text-align: center;
+  color: white;
+  h2 {
+    margin: 0 auto 2% auto;
+  }
+  .input-container {
+    margin: 10% auto;
+  }
+  form {
+    margin: 7% 10%;
+  }
+  button {
+    background-color: var(--purple);
+    font-size: 1rem;
+    padding: 2% 4%;
+    border-radius: 3px;
+    color: white;
+    font-weight: bolder;
+    &:hover {
+      color: var(--aqua);
+    }
+  }
+  .sign-up-link {
+    margin-left: 2%;
+    &:hover {
+      cursor: pointer;
+      color: var(--aqua);
+    }
+  }
+  .error {
+    color: red;
+  }
+`
 
 const initialFormState = {
   username: "",
@@ -15,7 +51,6 @@ export default function LoginForm() {
   const [formState, setFormState] = useState(initialFormState);
   const [formErrors, setFormErrors] = useState({});
   const dispatch = useDispatch();
-  // const { push } = useHistory();
   const history = useHistory();
 
   const formSchema = yup.object().shape({
@@ -86,7 +121,7 @@ export default function LoginForm() {
     }
 
   return (
-    <div className="login-form-container">
+    <LoginPageContainer>
       <form onSubmit={submit}>
         <label htmlFor="username">Username: </label>
         <input 
@@ -129,6 +164,6 @@ export default function LoginForm() {
 
 
       </form>
-    </div>
+    </LoginPageContainer>
   )
 }
