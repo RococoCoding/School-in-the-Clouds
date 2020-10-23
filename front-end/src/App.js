@@ -17,7 +17,6 @@ import TodoList from './components/TodoList';
 
 
 function App() {
-  // const marketing = `build-week-1-a19ugbcgs.vercel.app/index.html`
   return (
     <Router>
     <div className="App">

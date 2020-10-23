@@ -38,10 +38,17 @@ function ChangeTodo(props) {
 
     const handleSubmit = e => {
         e.preventDefault();
-        changeTodo({id, todoEdit});
+        const updatedTodo = {
+          id: todoEdit.todoid,
+          title: todoEdit.title.trim(),
+          description: todoEdit.description.trim(),
+      };
+        changeTodo({updatedTodo});
         getTodo(todoEdit);
         history.push('/admin');
     }
+
+    //Unresolved 500 undefined error^^ error on put request
 
     return (
         <div className="change-task-container">
