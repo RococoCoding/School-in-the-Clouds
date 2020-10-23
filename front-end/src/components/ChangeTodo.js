@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch, connect } from 'react-redux';
+import { connect } from 'react-redux';
 import { useParams, useHistory } from 'react-router-dom';
 import { axiosWithAuth } from '../store/utils/axiosWithAuth';
 import { getTodo, changeTodo } from '../store/actions/todoActions';
@@ -13,27 +13,22 @@ const todoForm = {
 function ChangeTodo(props) {
     const [todoEdit, setTodoEdit] = useState(todoForm);
     const [formErrors, setFormErrors] = useState({});
-    const [todoList, setTodoList] = useState([]);
-    const dispatch = useDispatch();
-    const { push } = useHistory();
+    // const [todoList, setTodoList] = useState([]);
     const { id } = useParams();
     const { getTodo, changeTodo } = props;
     const history = useHistory();
 
-    // useEffect(() => {
-    //     axiosWithAuth()
-    //     .get(`/todos/${id}`)
-    //     .then(res => {
-    //         setTodoEdit(res.data)
-    //     })
-    //     .catch(err => {
-    //         console.log(err);
-    //     })
-    // }, [id])
-
     useEffect(() => {
-      props.getTodo(id)
-  }, [id]);
+        axiosWithAuth()
+        .get(`/todos/${id}`)
+        .then(res => {
+            setTodoEdit(res.data)
+        })
+        .catch(err => {
+            console.log(err);
+        })
+    }, [id])
+
 
     const handleChange = e => {
         e.preventDefault();
@@ -43,10 +38,17 @@ function ChangeTodo(props) {
 
     const handleSubmit = e => {
         e.preventDefault();
-        changeTodo(id, todoEdit);
+        const updatedTodo = {
+          id: todoEdit.todoid,
+          title: todoEdit.title.trim(),
+          description: todoEdit.description.trim(),
+      };
+        changeTodo({updatedTodo});
         getTodo(todoEdit);
         history.push('/admin');
     }
+
+    //Unresolved 500 undefined error^^ error on put request
 
     return (
         <div className="change-task-container">

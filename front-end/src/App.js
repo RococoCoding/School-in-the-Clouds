@@ -17,7 +17,6 @@ import TodoList from './components/TodoList';
 
 
 function App() {
-  // const marketing = `build-week-1-a19ugbcgs.vercel.app/index.html`
   return (
     <Router>
     <div className="App">
@@ -29,7 +28,7 @@ function App() {
 
       <Switch>
      <PrivateRoute exact path='/profile' component={Profile} />
-     <PrivateRoute exact path='/change-todo' component={ChangeTodo} />
+     <PrivateRoute exact path='/change-todo/:id' component={ChangeTodo} />
      <PrivateRoute exact path='/todo-list' component={TodoList} />
      <PrivateRoute exact path='/create-todo' component={CreateTodo} />
      <PrivateRoute exact path='/admin' component={Admin} />
