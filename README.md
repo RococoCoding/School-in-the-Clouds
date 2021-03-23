@@ -1,4 +1,4 @@
-# Project 3 - School in the Cloud   
+# School in the Cloud   
 **Timeline**: One week  
 **Tech**: HTML, CSS, React.js, Material UI  
 **Description**: School in the Cloud is a platform that trains senior volunteers to teach students in a group or individual setting.  
