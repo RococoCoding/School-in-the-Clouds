@@ -1,6 +1,6 @@
 # School in the Cloud   
 **Timeline**: One week  
-**Tech**: HTML, CSS, React.js, Material UI  
+**Tech**: HTML, CSS, React.js, Material UI, Yup form validation  
 **Description**: School in the Cloud is a platform that trains senior volunteers to teach students in a group or individual setting.  
 **Contribution Type**: School Team Project - [Login form](https://github.com/RococoCoding/School-in-the-Clouds/blob/main/front-end/src/components/LoginForm.js), [Register form](https://github.com/RococoCoding/School-in-the-Clouds/blob/main/front-end/src/components/RegisterForm.js), [navbar](https://github.com/RococoCoding/School-in-the-Clouds/blob/main/front-end/src/components/NavBar.js)  
 **Status**: Completed  
